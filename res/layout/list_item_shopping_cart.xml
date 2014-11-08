@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp" 
+    android:paddingRight="15dp">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/default_image" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_name"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="￥8.0"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="40dp"
+        android:layout_toRightOf="@+id/iv_logo"
+        android:text="面包"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginRight="60dp"
+        android:text="2" />
+
+    <ImageButton
+        android:id="@+id/ib_minus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ib_plus"
+        android:layout_toLeftOf="@+id/ib_plus"
+        android:background="@null"
+        android:src="@drawable/minus_50_white" />
+
+    <ImageButton
+        android:id="@+id/ib_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_count"
+        android:layout_alignTop="@+id/tv_price"
+        android:background="@null"
+        android:src="@drawable/plus_50" />
+
+</RelativeLayout>

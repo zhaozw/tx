@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bigtext3_2_bg_gray"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/tv_categoryname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="服装鞋服装鞋"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_group_count_total"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:background="@color/brown"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white" />
+        <ImageView 
+            android:id="@+id/iv_group_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_icon_50" />
+    </LinearLayout>
+
+</LinearLayout>

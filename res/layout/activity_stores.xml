@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".StoresActivity" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/head_padding_bottom"
+        android:paddingTop="@dimen/head_padding_top" >
+
+        <TextView
+            android:id="@+id/tv_stores_header"
+            style="@style/headtext"
+            android:layout_centerVertical="true"
+            android:text="校内商店" />
+
+        <ImageButton
+            android:id="@+id/ib_back_stores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="5sp"
+            android:background="@color/white"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+    <!-- 我是顶部栏和下面内容的分割线 -->
+
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_h2"
+        android:orientation="vertical" />
+
+    <!-- 以下为显示商店的列表 -->
+
+    <ListView
+        android:id="@+id/lv_stores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/line_h2"
+        android:dividerHeight="1px" >
+    </ListView>
+
+</LinearLayout>

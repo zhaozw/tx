@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="15dp"
+    style="@style/mine_linearlayout" 
+    android:background="@drawable/mine_layout_border"
+    android:paddingRight="15dp" >
+
+    <ImageButton
+        android:id="@+id/category_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:src="@drawable/mine_edit_delete" />
+
+    <TextView
+        android:id="@+id/category_txt"
+        style="@style/commodity_key"
+        android:layout_height="50dp"
+        android:text="电脑" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/item_mine_arrow" />
+    
+</LinearLayout>

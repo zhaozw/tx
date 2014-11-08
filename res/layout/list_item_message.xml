@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="70dp"
+	android:orientation="horizontal"
+	android:paddingLeft="5dp"
+	android:paddingTop="5dp"
+	android:paddingRight="2dp"
+	android:paddingBottom="5dp" >
+
+    <ImageView
+        android:id="@+id/iv_message"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="left"
+        android:contentDescription="@string/loading"
+        android:background="@drawable/round_image_bg"
+        android:src="@drawable/item_pic_default"
+        android:layout_marginLeft="3dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="15dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp" >
+
+        <TextView
+            android:id="@+id/tv_message_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="九成新床上电脑桌"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="17sp"
+            android:layout_marginBottom="6dp" />
+
+	        		
+
+       <TextView
+           android:id="@+id/tv_message_content"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:maxEms="20"
+           android:singleLine="true"
+           android:ellipsize="end"
+           android:text="消息消息消息消息消息消息消息消息消息消息消息消息" />
+            
+        
+        
+    </LinearLayout>
+    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/loading"
+        android:src="@drawable/item_mine_arrow" />
+
+</LinearLayout>

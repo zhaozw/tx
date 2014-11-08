@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@color/snow"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iv_categoryitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/item_pic_default" />
+
+    <TextView
+        android:id="@+id/tv_categoryitem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="种类"
+        android:textSize="15sp" />
+
+</LinearLayout>

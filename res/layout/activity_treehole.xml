@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".TreeholeActivity" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/head_padding_bottom"
+        android:paddingTop="@dimen/head_padding_top" >
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/headtext"
+            android:layout_centerVertical="true"
+            android:text="树洞" />
+
+        <ImageButton
+            android:id="@+id/ib_back_treehole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="5sp"
+            android:background="@color/white"
+            android:src="@drawable/back" />
+
+        <ImageButton
+            android:id="@+id/ib_write_treehole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="5sp"
+            android:background="@color/white"
+            android:src="@drawable/edit_file_50" />
+    </RelativeLayout>
+
+    <!-- 我是顶部栏和下面内容的分割线 -->
+
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_h2"
+        android:orientation="vertical" />
+    
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fefefe"
+        android:orientation="vertical" >
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ListView
+            android:id="@+id/lv_treehole"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:divider="@drawable/line_h2"
+            android:dividerHeight="1px" >
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_treehole_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:text="正在加载，请稍候。。。"
+        android:visibility="gone" />
+    
+    </RelativeLayout>
+
+</LinearLayout>
