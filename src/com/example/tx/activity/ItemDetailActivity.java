@@ -118,6 +118,8 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
     //点点数组  
     private ImageView[] tips;
     
+    //微信分享相关
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
