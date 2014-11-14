@@ -50,6 +50,14 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    
+    <!-- 分享 相关权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
         android:name="com.example.tx.ExampleApplication"
@@ -180,6 +188,10 @@
 		   android:configChanges="keyboardHidden|orientation|screenSize"
 		   android:exported="true"
 		   android:screenOrientation="portrait" />
+        
+        <!-- 授权 SSO -->
+        <activity android:name="com.renn.rennsdk.oauth.OAuthActivity"
+				android:configChanges="orientation|navigation|keyboardHidden"/>
 
 	    <!-- ###################添加UmengAppkey###################### -->
 	        <meta-data

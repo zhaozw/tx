@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,25 @@ import com.example.tx.util.Request4Image;
 import com.example.tx.view.ListViewInsideScrollView;
 import com.example.tx.view.ResizeLayout;
 import com.example.tx.view.ResizeLayout.OnResizeListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.laiwang.controller.UMLWHandler;
+import com.umeng.socialize.media.RenrenShareContent;
+import com.umeng.socialize.media.SinaShareContent;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.RenrenSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.TencentWBSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
+import com.umeng.socialize.yixin.controller.UMYXHandler;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,6 +79,7 @@ import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ViewSwitcher.ViewFactory;
 
@@ -103,6 +124,7 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 	private boolean liked = false;
 	//举报商品
 	private TextView tv_reportItem;
+	private TextView tv_shareItem;
 	//更多按钮
 	private ImageButton ib_more_detail;
 	
@@ -118,7 +140,13 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
     //点点数组  
     private ImageView[] tips;
     
-    //微信分享相关
+    /*分享相关
+     * (non-Javadoc)
+     * @see android.app.Activity#onCreate(android.os.Bundle)
+     * yu
+     */
+    UMSocialService mController = UMServiceFactory.getUMSocialService("myshare");
+    Map<String, SHARE_MEDIA> mPlatformsMap = new HashMap<String, SHARE_MEDIA>();
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +169,7 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 		
 		//举报商品
 		tv_reportItem = (TextView) findViewById(R.id.tv_reportItem);
+		tv_shareItem = (TextView) findViewById(R.id.tv_shareItem);
 		//更多按钮
 		ib_more_detail = (ImageButton) findViewById(R.id.ib_more_detail);
 		
@@ -269,43 +298,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 		}
 			
 		if(from < 3||from==4){
-
-//			final ImageView pic = (ImageView) findViewById(R.id.is_idetail_item_pic);
-//			
-//			if(msg.image.size() == 0){
-//				Drawable d= getResources().getDrawable(R.drawable.default_image); //xxx根据自己的情况获取drawable
-//				BitmapDrawable bd = (BitmapDrawable) d;
-//				Bitmap bm = bd.getBitmap();
-//				b = bm;
-//			}
-//			else
-//				b = C.getBitmapFromMemCache(msg.image.get(0).picId);
-//			if (b == null) {
-//				pic.setImageResource(R.drawable.item_pic_default);
-//	
-//				//根据url获取图片
-//				new Request4Image(msg.image.get(0).picUrl) 
-//				{
-//					@Override
-//					protected void onPostExecute(Bitmap result) 
-//					{
-//						if(result==null) 
-//							return;
-//						//C.addBitmapToMemoryCache(id, result);
-//						pic.setImageBitmap(Bitmap.createScaledBitmap(result, 153, 153, true));
-//						//notifyDataSetChanged();
-//					}
-//				}.execute();
-//	
-//						
-//			} else {
-//				pic.setImageBitmap(b);
-//			}
-//			
-//			
-//			int len = getWindowManager().getDefaultDisplay().getWidth() - 10;
-//			pic.setMinimumHeight(len);
-//			pic.setMinimumWidth(len);
 	
 			((TextView) findViewById(R.id.tv_idetail_price)).setText("¥"
 					+ msg.price);
@@ -686,6 +678,16 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 			
 		});
 		
+		//分享商品
+		tv_shareItem.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				showCustomUI(true);
+			}
+			
+		});
+		
 		((Button) findViewById(R.id.btn_report_itemcomment)).setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -757,10 +759,194 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 		});
 
 		new SetDataListThread().start();
+		
+		initSocialSDK();
+		initPlatformMap();
 
 	}
 
 	
+
+	protected void showCustomUI(final boolean isDirectShare) {
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+				ItemDetailActivity.this);
+		dialogBuilder.setTitle("分享");
+		// 
+		final CharSequence[] items = {  "QQ", "QQ空间","微信","朋友圈","新浪微博","人人网"};
+		dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				// 鑾峰彇鐢ㄦ埛鐐瑰嚮鐨勫钩鍙�				
+				SHARE_MEDIA platform = mPlatformsMap.get(items[which]);
+				
+				mController.setShareContent("来自淘学的分享");
+				//根据平台设置分享内容
+				if(platform == SHARE_MEDIA.QQ){
+					// 设置分享内容
+					mController.setShareContent("来自淘学的分享");
+					// 设置多媒体分享
+					mController.setShareMedia(new UMImage(ItemDetailActivity.this,
+							R.drawable.umeng_socialize_qq_on));
+				}
+				else if(platform == SHARE_MEDIA.QZONE){
+					// 设置分享内容
+					mController.setShareContent("来自淘学的分享");
+					// 设置多媒体分享
+					mController.setShareMedia(new UMImage(ItemDetailActivity.this,
+							R.drawable.umeng_socialize_qq_on));
+				}
+				else if(platform == SHARE_MEDIA.WEIXIN){
+					//设置微信好友分享内容
+					WeiXinShareContent weixinContent = new WeiXinShareContent();
+					//设置分享文字
+					weixinContent.setShareContent("来自淘学的分享");
+					//设置title
+					weixinContent.setTitle("淘学");
+					//设置分享内容跳转URL
+					weixinContent.setTargetUrl("http://www.baidu.com");
+					//设置分享图片
+					weixinContent.setShareImage(new UMImage(ItemDetailActivity.this,
+							R.drawable.umeng_socialize_wxcircle));
+					mController.setShareMedia(weixinContent);
+				}
+				else if(platform == SHARE_MEDIA.WEIXIN_CIRCLE){
+					//设置微信朋友圈分享内容
+					CircleShareContent circleMedia = new CircleShareContent();
+					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，朋友圈");
+					//设置朋友圈title
+					circleMedia.setTitle("友盟社会化分享组件-朋友圈");
+					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+							R.drawable.umeng_socialize_wxcircle));
+					circleMedia.setTargetUrl("http://www.baidu.com");
+					mController.setShareMedia(circleMedia);
+				}
+				else if(platform == SHARE_MEDIA.SINA){
+					//设置新浪微博分享内容
+					SinaShareContent circleMedia = new SinaShareContent();
+					//设置微信朋友圈分享内容
+					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，新浪微博");
+					//设置朋友圈title
+					circleMedia.setTitle("友盟社会化分享组件-新浪微博");
+					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+							R.drawable.umeng_socialize_sina_on));
+					circleMedia.setTargetUrl("http://www.baidu.com");
+					mController.setShareMedia(circleMedia);
+				}
+				else if(platform == SHARE_MEDIA.RENREN){
+					RenrenShareContent circleMedia = new RenrenShareContent();
+					//设置微信朋友圈分享内容
+					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，人人网");
+					//设置朋友圈title
+					circleMedia.setTitle("友盟社会化分享组件-人人网");
+					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+							R.drawable.umeng_socialize_renren_on));
+					circleMedia.setTargetUrl("http://www.baidu.com");
+					mController.setShareMedia(circleMedia);
+				}
+				
+				if (isDirectShare) {
+					// 璋冪敤鐩存帴鍒嗕韩
+					mController.directShare(ItemDetailActivity.this, platform,
+							mShareListener);
+				} else {
+					// 璋冪敤鐩存帴鍒嗕韩, 浣嗘槸鍦ㄥ垎浜墠鐢ㄦ埛鍙互缂栬緫瑕佸垎浜殑鍐呭
+					mController.postShare(ItemDetailActivity.this, platform,
+							mShareListener);
+				}
+			} // end of onClick
+		});
+
+		dialogBuilder.create().show();
+	}
+	
+	SnsPostListener mShareListener = new SnsPostListener(){
+
+		@Override
+		public void onComplete(SHARE_MEDIA platform, int stCode,
+				SocializeEntity entity) {
+			if (stCode == 200) {
+				Toast.makeText(ItemDetailActivity.this, "分享成功", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				Toast.makeText(ItemDetailActivity.this,
+						"分享失败: error code : " + stCode, Toast.LENGTH_SHORT)
+						.show();
+			}
+		}
+
+		@Override
+		public void onStart() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+
+
+
+	private void initPlatformMap() {
+		//设置新浪SSO handler
+		mController.getConfig().setSsoHandler(new SinaSsoHandler());
+		//设置腾讯微博SSO handler
+		mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
+		//添加人人网SSO授权功能     
+		//APPID:201874      
+		//API Key:28401c0964f04a72a14c812d6132fcef    
+		//Secret:3bf66e42db1e4fa9829b955cc300b737     
+		RenrenSsoHandler renrenSsoHandler = new RenrenSsoHandler(ItemDetailActivity.this,
+		            "273146", "4e826d482e874b18b9811fde4e9937fb",
+		            "6e62e04637d0436496bb4a5588b7b7e4");
+		mController.getConfig().setSsoHandler(renrenSsoHandler);
+		
+		
+		//qq分享
+		UMQQSsoHandler qqHandler = new UMQQSsoHandler(ItemDetailActivity.this,
+				"100424468", "c7394704798a158208a74ab60104f0ba");
+		qqHandler.addToSocialSDK();
+		//qq控件
+		QZoneSsoHandler qzoneHandler = new QZoneSsoHandler(ItemDetailActivity.this,
+				"100424468", "c7394704798a158208a74ab60104f0ba");
+		qzoneHandler.addToSocialSDK();
+		
+		//微信
+		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
+		String appId = "wxb05c4fcaab4bb045";
+		String appSecret = "038a086b4204c80f2c2371113288caa5";
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(ItemDetailActivity.this,appId,appSecret);
+		wxHandler.addToSocialSDK();
+		// 支持微信朋友圈
+		UMWXHandler wxCircleHandler = new UMWXHandler(ItemDetailActivity.this,appId,appSecret);
+		wxCircleHandler.setToCircle(true);
+		wxCircleHandler.addToSocialSDK();
+		
+		
+
+//		//易信
+//		UMYXHandler yixinHandler = new UMYXHandler(ItemDetailActivity.this,
+//				"yxc0614e80c9304c11b0391514d09f13bf");
+//		yixinHandler.addToSocialSDK();
+
+//		//来往
+//		UMLWHandler laiwangHandler = new UMLWHandler(ItemDetailActivity.this,
+//				"laiwangd497e70d4", "d497e70d4c3e4efeab1381476bac4c5e");
+//		laiwangHandler.addToSocialSDK();
+
+		
+	}
+
+
+
+	private void initSocialSDK() {
+		mPlatformsMap.put("QQ", SHARE_MEDIA.QQ);
+		mPlatformsMap.put("QQ空间", SHARE_MEDIA.QZONE);
+		mPlatformsMap.put("微信", SHARE_MEDIA.WEIXIN);
+		mPlatformsMap.put("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE);
+		mPlatformsMap.put("新浪微博", SHARE_MEDIA.SINA);
+		mPlatformsMap.put("人人网", SHARE_MEDIA.RENREN);
+	}
+
+
 
 	class MyHandler extends Handler {
 
@@ -780,35 +966,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 				
 			case 2:
 				
-//				final ImageView pics = (ImageView) findViewById(R.id.iv_idetail_item_pic);				
-//				
-//				b = C.getBitmapFromMemCache(theItem.image.get(0).picId);
-//				if (b == null) {
-//					pics.setImageResource(R.drawable.item_pic_default);
-//		
-//					//根据url获取图片
-//					new Request4Image(theItem.image.get(0).picUrl) 
-//					{
-//						@Override
-//						protected void onPostExecute(Bitmap result) 
-//						{
-//							if(result==null) 
-//								return;
-//							//C.addBitmapToMemoryCache(id, result);
-//							pics.setImageBitmap(Bitmap.createScaledBitmap(result, 153, 153, true));
-//							//notifyDataSetChanged();
-//						}
-//					}.execute();
-//		
-//							
-//				} else {
-//					pics.setImageBitmap(b);
-//				}
-//				
-//				
-//				int len = getWindowManager().getDefaultDisplay().getWidth() - 10;
-//				pics.setMinimumHeight(len);
-//				pics.setMinimumWidth(len);
 				
 				bitcount = theItem.image.size();
 				bitmaps = new Bitmap[bitcount];
@@ -1193,5 +1350,19 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
         i.setLayoutParams(new ImageSwitcher.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));  
         return i; 
 	}
+
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
+				resultCode);
+		if (ssoHandler != null) {
+			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+		}
+
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	
 }
