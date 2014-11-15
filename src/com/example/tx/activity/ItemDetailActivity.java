@@ -34,6 +34,7 @@ import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListene
 import com.umeng.socialize.laiwang.controller.UMLWHandler;
 import com.umeng.socialize.media.RenrenShareContent;
 import com.umeng.socialize.media.SinaShareContent;
+import com.umeng.socialize.media.TencentWbShareContent;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.RenrenSsoHandler;
@@ -124,7 +125,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 	private boolean liked = false;
 	//举报商品
 	private TextView tv_reportItem;
-	private TextView tv_shareItem;
 	//更多按钮
 	private ImageButton ib_more_detail;
 	
@@ -145,8 +145,8 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
      * @see android.app.Activity#onCreate(android.os.Bundle)
      * yu
      */
-    UMSocialService mController = UMServiceFactory.getUMSocialService("myshare");
-    Map<String, SHARE_MEDIA> mPlatformsMap = new HashMap<String, SHARE_MEDIA>();
+    UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+//    Map<String, SHARE_MEDIA> mPlatformsMap = new HashMap<String, SHARE_MEDIA>();
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +169,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 		
 		//举报商品
 		tv_reportItem = (TextView) findViewById(R.id.tv_reportItem);
-		tv_shareItem = (TextView) findViewById(R.id.tv_shareItem);
 		//更多按钮
 		ib_more_detail = (ImageButton) findViewById(R.id.ib_more_detail);
 		
@@ -347,17 +346,12 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 				JSONObject res = C.asyncPost(C.URLis_favorite_item, p);
 				try {
 					if (res.getInt("status")== 0) {
-						//TODO 没有收藏
-						//Log.d("like","like");
 						liked = false;
 					}
 					else if(res.getInt("status")== 1){
-						//TODO 已经收藏
-						//Log.d("like","liked");
 						liked = true;
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				mHandler.sendEmptyMessage(11);
@@ -414,7 +408,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 									mHandler.sendEmptyMessage(11);
 								}
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -434,7 +427,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 
 			@Override
 			public void onClick(View v) {
-				// TODO 跳转到查看别人信息界面
 				if(flag)
 					return;
 				Intent intent = new Intent(ItemDetailActivity.this,UserinforActivity.class);
@@ -613,7 +605,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 					{
 						@Override
 						protected void onPostExecute(JSONObject res) {
-							// TODO 自动生成的方法存根
 							try {
 								Log.d("itemdetail",res.getInt("status")+",,"+res.getString("description"));
 								if(res.getInt("status") != 0){
@@ -625,7 +616,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 								refcontent = "";
 								//makeToast(res.getString("description"));
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							new SetDataListThread().start();
@@ -678,15 +668,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 			
 		});
 		
-		//分享商品
-		tv_shareItem.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				showCustomUI(true);
-			}
-			
-		});
 		
 		((Button) findViewById(R.id.btn_report_itemcomment)).setOnClickListener(new OnClickListener(){
 
@@ -743,6 +724,48 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 			
 		});
 		
+		//分享按钮事件
+		((ImageView) findViewById(R.id.iv_id_circle)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				shareCircle();
+			}
+			
+		});
+		((ImageView) findViewById(R.id.iv_id_renren)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				shareRenren();
+			}
+			
+		});
+		((ImageView) findViewById(R.id.iv_id_sina)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				shareSina();
+			}
+			
+		});
+		((ImageView) findViewById(R.id.iv_id_tx)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				shareTX();
+			}
+			
+		});
+		((ImageView) findViewById(R.id.iv_id_wx)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				shareWX();
+			}
+			
+		});
+		
 
 		dataListView = (ListViewInsideScrollView) findViewById(R.id.lv_idetail);
 		dataListView.setEmptyView(findViewById(R.id.ll_comment_empty));
@@ -760,104 +783,211 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 
 		new SetDataListThread().start();
 		
-		initSocialSDK();
+//		initSocialSDK();
 		initPlatformMap();
 
 	}
 
+	//微信分享
+	private void shareWX(){
+		WeiXinShareContent weixinContent = new WeiXinShareContent();
+		//设置分享文字
+		weixinContent.setShareContent("来自淘学的分享");
+		//设置title
+		weixinContent.setTitle("淘学");
+		//设置分享内容跳转URL
+		weixinContent.setTargetUrl("http://www.baidu.com");
+		//设置分享图片
+		weixinContent.setShareImage(new UMImage(ItemDetailActivity.this,
+				R.drawable.umeng_socialize_wxcircle));
+		mController.setShareMedia(weixinContent);
+		
+		doShare(true,SHARE_MEDIA.WEIXIN);
+	}
+	
+	//朋友圈分享
+	private void shareCircle(){
+		//设置微信朋友圈分享内容
+		CircleShareContent circleMedia = new CircleShareContent();
+		circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，朋友圈");
+		//设置朋友圈title
+		circleMedia.setTitle("友盟社会化分享组件-朋友圈");
+		circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+				R.drawable.umeng_socialize_wxcircle));
+		circleMedia.setTargetUrl("http://www.baidu.com");
+		mController.setShareMedia(circleMedia);
+		
+		doShare(true,SHARE_MEDIA.WEIXIN_CIRCLE);
+	}
+	
+	//人人分享
+	private void shareRenren(){
+		RenrenShareContent circleMedia = new RenrenShareContent();
+		//设置微信朋友圈分享内容
+		circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，人人网");
+		//设置朋友圈title
+		circleMedia.setTitle("友盟社会化分享组件-人人网");
+		circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+				R.drawable.umeng_socialize_renren_on));
+		circleMedia.setTargetUrl("http://www.baidu.com");
+		mController.setShareMedia(circleMedia);
+		
+		doShare(true,SHARE_MEDIA.RENREN);
+	}
+	
+	//新浪分享
+	private void shareSina(){
+		//设置新浪微博分享内容
+		SinaShareContent circleMedia = new SinaShareContent();
+		//设置微信朋友圈分享内容
+		circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，新浪微博");
+		//设置朋友圈title
+		circleMedia.setTitle("友盟社会化分享组件-新浪微博");
+		circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+				R.drawable.umeng_socialize_sina_on));
+		circleMedia.setTargetUrl("http://www.baidu.com");
+		mController.setShareMedia(circleMedia);
+		
+		doShare(true,SHARE_MEDIA.SINA);
+	}
+	
+	//腾讯微博分享
+	private void shareTX(){
+		//设置微信好友分享内容
+		TencentWbShareContent weixinContent = new TencentWbShareContent();
+		//设置分享文字
+		weixinContent.setShareContent("来自淘学的分享");
+		//设置title
+		weixinContent.setTitle("淘学");
+		//设置分享内容跳转URL
+		weixinContent.setTargetUrl("http://www.baidu.com");
+		//设置分享图片
+		weixinContent.setShareImage(new UMImage(ItemDetailActivity.this,
+				R.drawable.umeng_socialize_tx_on));
+		mController.setShareMedia(weixinContent);
+		
+		doShare(true,SHARE_MEDIA.TENCENT);
+	}
+	
+	//启动分享
+	private void doShare(boolean isDirectShare,SHARE_MEDIA platform){
+		if (isDirectShare) {
+			// 璋冪敤鐩存帴鍒嗕韩
+			mController.directShare(ItemDetailActivity.this, platform,
+					mShareListener);
+		} else {
+			// 璋冪敤鐩存帴鍒嗕韩, 浣嗘槸鍦ㄥ垎浜墠鐢ㄦ埛鍙互缂栬緫瑕佸垎浜殑鍐呭
+			mController.postShare(ItemDetailActivity.this, platform,
+					mShareListener);
+		}
+	}
 	
 
-	protected void showCustomUI(final boolean isDirectShare) {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-				ItemDetailActivity.this);
-		dialogBuilder.setTitle("分享");
-		// 
-		final CharSequence[] items = {  "QQ", "QQ空间","微信","朋友圈","新浪微博","人人网"};
-		dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
-
-			public void onClick(DialogInterface dialog, int which) {
-				// 鑾峰彇鐢ㄦ埛鐐瑰嚮鐨勫钩鍙�				
-				SHARE_MEDIA platform = mPlatformsMap.get(items[which]);
-				
-				mController.setShareContent("来自淘学的分享");
-				//根据平台设置分享内容
-				if(platform == SHARE_MEDIA.QQ){
-					// 设置分享内容
-					mController.setShareContent("来自淘学的分享");
-					// 设置多媒体分享
-					mController.setShareMedia(new UMImage(ItemDetailActivity.this,
-							R.drawable.umeng_socialize_qq_on));
-				}
-				else if(platform == SHARE_MEDIA.QZONE){
-					// 设置分享内容
-					mController.setShareContent("来自淘学的分享");
-					// 设置多媒体分享
-					mController.setShareMedia(new UMImage(ItemDetailActivity.this,
-							R.drawable.umeng_socialize_qq_on));
-				}
-				else if(platform == SHARE_MEDIA.WEIXIN){
-					//设置微信好友分享内容
-					WeiXinShareContent weixinContent = new WeiXinShareContent();
-					//设置分享文字
-					weixinContent.setShareContent("来自淘学的分享");
-					//设置title
-					weixinContent.setTitle("淘学");
-					//设置分享内容跳转URL
-					weixinContent.setTargetUrl("http://www.baidu.com");
-					//设置分享图片
-					weixinContent.setShareImage(new UMImage(ItemDetailActivity.this,
-							R.drawable.umeng_socialize_wxcircle));
-					mController.setShareMedia(weixinContent);
-				}
-				else if(platform == SHARE_MEDIA.WEIXIN_CIRCLE){
-					//设置微信朋友圈分享内容
-					CircleShareContent circleMedia = new CircleShareContent();
-					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，朋友圈");
-					//设置朋友圈title
-					circleMedia.setTitle("友盟社会化分享组件-朋友圈");
-					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
-							R.drawable.umeng_socialize_wxcircle));
-					circleMedia.setTargetUrl("http://www.baidu.com");
-					mController.setShareMedia(circleMedia);
-				}
-				else if(platform == SHARE_MEDIA.SINA){
-					//设置新浪微博分享内容
-					SinaShareContent circleMedia = new SinaShareContent();
-					//设置微信朋友圈分享内容
-					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，新浪微博");
-					//设置朋友圈title
-					circleMedia.setTitle("友盟社会化分享组件-新浪微博");
-					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
-							R.drawable.umeng_socialize_sina_on));
-					circleMedia.setTargetUrl("http://www.baidu.com");
-					mController.setShareMedia(circleMedia);
-				}
-				else if(platform == SHARE_MEDIA.RENREN){
-					RenrenShareContent circleMedia = new RenrenShareContent();
-					//设置微信朋友圈分享内容
-					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，人人网");
-					//设置朋友圈title
-					circleMedia.setTitle("友盟社会化分享组件-人人网");
-					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
-							R.drawable.umeng_socialize_renren_on));
-					circleMedia.setTargetUrl("http://www.baidu.com");
-					mController.setShareMedia(circleMedia);
-				}
-				
-				if (isDirectShare) {
-					// 璋冪敤鐩存帴鍒嗕韩
-					mController.directShare(ItemDetailActivity.this, platform,
-							mShareListener);
-				} else {
-					// 璋冪敤鐩存帴鍒嗕韩, 浣嗘槸鍦ㄥ垎浜墠鐢ㄦ埛鍙互缂栬緫瑕佸垎浜殑鍐呭
-					mController.postShare(ItemDetailActivity.this, platform,
-							mShareListener);
-				}
-			} // end of onClick
-		});
-
-		dialogBuilder.create().show();
-	}
+//	protected void showCustomUI(final boolean isDirectShare) {
+//		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+//				ItemDetailActivity.this);
+//		dialogBuilder.setTitle("分享");
+//		// 
+//		final CharSequence[] items = {"朋友圈","微信","人人网","新浪微博","腾讯微博"};
+//		dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+//
+//			public void onClick(DialogInterface dialog, int which) {
+//				// 鑾峰彇鐢ㄦ埛鐐瑰嚮鐨勫钩鍙�				
+//				SHARE_MEDIA platform = mPlatformsMap.get(items[which]);
+//				
+//				mController.setShareContent("来自淘学的分享");
+//				//根据平台设置分享内容
+////				if(platform == SHARE_MEDIA.QQ){
+////					// 设置分享内容
+////					mController.setShareContent("来自淘学的分享");
+////					// 设置多媒体分享
+////					mController.setShareMedia(new UMImage(ItemDetailActivity.this,
+////							R.drawable.umeng_socialize_qq_on));
+////				}
+////				else if(platform == SHARE_MEDIA.QZONE){
+////					// 设置分享内容
+////					mController.setShareContent("来自淘学的分享");
+////					// 设置多媒体分享
+////					mController.setShareMedia(new UMImage(ItemDetailActivity.this,
+////							R.drawable.umeng_socialize_qq_on));
+////				}
+//				if(platform == SHARE_MEDIA.TENCENT){
+//					//设置微信好友分享内容
+//					TencentWbShareContent weixinContent = new TencentWbShareContent();
+//					//设置分享文字
+//					weixinContent.setShareContent("来自淘学的分享");
+//					//设置title
+//					weixinContent.setTitle("淘学");
+//					//设置分享内容跳转URL
+//					weixinContent.setTargetUrl("http://www.baidu.com");
+//					//设置分享图片
+//					weixinContent.setShareImage(new UMImage(ItemDetailActivity.this,
+//							R.drawable.umeng_socialize_tx_on));
+//					mController.setShareMedia(weixinContent);
+//				}
+//				else if(platform == SHARE_MEDIA.WEIXIN){
+//					//设置微信好友分享内容
+//					WeiXinShareContent weixinContent = new WeiXinShareContent();
+//					//设置分享文字
+//					weixinContent.setShareContent("来自淘学的分享");
+//					//设置title
+//					weixinContent.setTitle("淘学");
+//					//设置分享内容跳转URL
+//					weixinContent.setTargetUrl("http://www.baidu.com");
+//					//设置分享图片
+//					weixinContent.setShareImage(new UMImage(ItemDetailActivity.this,
+//							R.drawable.umeng_socialize_wxcircle));
+//					mController.setShareMedia(weixinContent);
+//				}
+//				else if(platform == SHARE_MEDIA.WEIXIN_CIRCLE){
+//					//设置微信朋友圈分享内容
+//					CircleShareContent circleMedia = new CircleShareContent();
+//					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，朋友圈");
+//					//设置朋友圈title
+//					circleMedia.setTitle("友盟社会化分享组件-朋友圈");
+//					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+//							R.drawable.umeng_socialize_wxcircle));
+//					circleMedia.setTargetUrl("http://www.baidu.com");
+//					mController.setShareMedia(circleMedia);
+//				}
+//				else if(platform == SHARE_MEDIA.SINA){
+//					//设置新浪微博分享内容
+//					SinaShareContent circleMedia = new SinaShareContent();
+//					//设置微信朋友圈分享内容
+//					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，新浪微博");
+//					//设置朋友圈title
+//					circleMedia.setTitle("友盟社会化分享组件-新浪微博");
+//					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+//							R.drawable.umeng_socialize_sina_on));
+//					circleMedia.setTargetUrl("http://www.baidu.com");
+//					mController.setShareMedia(circleMedia);
+//				}
+//				else if(platform == SHARE_MEDIA.RENREN){
+//					RenrenShareContent circleMedia = new RenrenShareContent();
+//					//设置微信朋友圈分享内容
+//					circleMedia.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能，人人网");
+//					//设置朋友圈title
+//					circleMedia.setTitle("友盟社会化分享组件-人人网");
+//					circleMedia.setShareImage(new UMImage(ItemDetailActivity.this,
+//							R.drawable.umeng_socialize_renren_on));
+//					circleMedia.setTargetUrl("http://www.baidu.com");
+//					mController.setShareMedia(circleMedia);
+//				}
+//				
+//				if (isDirectShare) {
+//					// 璋冪敤鐩存帴鍒嗕韩
+//					mController.directShare(ItemDetailActivity.this, platform,
+//							mShareListener);
+//				} else {
+//					// 璋冪敤鐩存帴鍒嗕韩, 浣嗘槸鍦ㄥ垎浜墠鐢ㄦ埛鍙互缂栬緫瑕佸垎浜殑鍐呭
+//					mController.postShare(ItemDetailActivity.this, platform,
+//							mShareListener);
+//				}
+//			} // end of onClick
+//		});
+//
+//		dialogBuilder.create().show();
+//	}
 	
 	SnsPostListener mShareListener = new SnsPostListener(){
 
@@ -898,15 +1028,15 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 		            "6e62e04637d0436496bb4a5588b7b7e4");
 		mController.getConfig().setSsoHandler(renrenSsoHandler);
 		
-		
-		//qq分享
-		UMQQSsoHandler qqHandler = new UMQQSsoHandler(ItemDetailActivity.this,
-				"100424468", "c7394704798a158208a74ab60104f0ba");
-		qqHandler.addToSocialSDK();
-		//qq控件
-		QZoneSsoHandler qzoneHandler = new QZoneSsoHandler(ItemDetailActivity.this,
-				"100424468", "c7394704798a158208a74ab60104f0ba");
-		qzoneHandler.addToSocialSDK();
+		//暂时不加qq和qq空间 yu
+//		//qq分享
+//		UMQQSsoHandler qqHandler = new UMQQSsoHandler(ItemDetailActivity.this,
+//				"100424468", "c7394704798a158208a74ab60104f0ba");
+//		qqHandler.addToSocialSDK();
+//		//qq控件
+//		QZoneSsoHandler qzoneHandler = new QZoneSsoHandler(ItemDetailActivity.this,
+//				"100424468", "c7394704798a158208a74ab60104f0ba");
+//		qzoneHandler.addToSocialSDK();
 		
 		//微信
 		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
@@ -937,14 +1067,15 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 
 
 
-	private void initSocialSDK() {
-		mPlatformsMap.put("QQ", SHARE_MEDIA.QQ);
-		mPlatformsMap.put("QQ空间", SHARE_MEDIA.QZONE);
-		mPlatformsMap.put("微信", SHARE_MEDIA.WEIXIN);
-		mPlatformsMap.put("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE);
-		mPlatformsMap.put("新浪微博", SHARE_MEDIA.SINA);
-		mPlatformsMap.put("人人网", SHARE_MEDIA.RENREN);
-	}
+//	private void initSocialSDK() {
+////		mPlatformsMap.put("QQ", SHARE_MEDIA.QQ);
+////		mPlatformsMap.put("QQ空间", SHARE_MEDIA.QZONE);
+//		mPlatformsMap.put("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE);
+//		mPlatformsMap.put("微信", SHARE_MEDIA.WEIXIN);
+//		mPlatformsMap.put("人人网", SHARE_MEDIA.RENREN);
+//		mPlatformsMap.put("新浪微博", SHARE_MEDIA.SINA);
+//		mPlatformsMap.put("腾讯微博", SHARE_MEDIA.TENCENT);
+//	}
 
 
 
@@ -1153,7 +1284,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 				//
 				mHandler.sendEmptyMessage(2);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -1180,7 +1310,6 @@ public class ItemDetailActivity extends BaseActivity implements OnResizeListener
 				}
 				mHandler.sendToast(res.getString("description"));
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

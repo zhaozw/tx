@@ -160,8 +160,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:maxLength="10"
-                            android:textColor="@color/red"
                             android:text=""
+                            android:textColor="@color/red"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -198,8 +198,6 @@
                             android:paddingBottom="5dp"
                             android:text=""
                             android:textSize="18sp" />
-
-                        
                     </LinearLayout>
 
                     <!-- 我是顶部栏和下面内容的分割线 -->
@@ -253,6 +251,71 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/item_mine_arrow" />
                     </RelativeLayout>
+                    <!-- 我是顶部栏和下面内容的分割线 -->
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_h2_light" />
+                </LinearLayout>
+
+                <!-- 分享部分 -->
+
+                <LinearLayout style="@style/external_panel" >
+
+                    <LinearLayout
+                        android:id="@+id/LinearLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp"
+                        android:paddingTop="4dp" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="0.75"
+                            android:gravity="center_vertical"
+                            android:text="分享到:"
+                            android:textSize="17sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_weight="0.25"
+                            android:orientation="horizontal" >
+                            
+                            <ImageView
+                                android:id="@+id/iv_id_circle"
+                                style="@style/shareimage"
+                                android:src="@drawable/umeng_socialize_wxcircle" />
+
+                            <ImageView
+                                android:id="@+id/iv_id_wx"
+                                style="@style/shareimage"
+                                android:src="@drawable/umeng_socialize_wechat" />
+
+                            <ImageView
+                                android:id="@+id/iv_id_renren"
+                                style="@style/shareimage"
+                                android:src="@drawable/umeng_socialize_renren_on" />
+
+                            <ImageView
+                                android:id="@+id/iv_id_sina"
+                                style="@style/shareimage"
+                                android:src="@drawable/umeng_socialize_sina_on" />
+
+                            
+
+                            <ImageView
+                                android:id="@+id/iv_id_tx"
+                                style="@style/shareimage"
+                                android:src="@drawable/umeng_socialize_tx_on" />
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- 我是顶部栏和下面内容的分割线 -->
@@ -361,18 +424,18 @@
                 </LinearLayout>
             </LinearLayout>
         </com.example.tx.view.MyScrollView>
-        
+
         <LinearLayout
             android:id="@+id/ll_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"
             android:layout_below="@+id/LinearLayout1"
+            android:layout_marginRight="8dp"
             android:background="@color/white"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="8dp" >
+            android:padding="8dp"
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
@@ -394,8 +457,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/iv_like"
                     android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/iv_like"
                     android:text="收藏商品"
                     android:textSize="18sp" />
             </RelativeLayout>
@@ -419,37 +482,13 @@
                     android:id="@+id/tv_reportItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/iv_report"
-                    android:layout_marginLeft="3dp"
                     android:text="举报商品"
                     android:textSize="18sp" />
             </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/RelativeLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal" >
 
-                <ImageView
-                    android:id="@+id/iv_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/report_25" />
-
-                <TextView
-                    android:id="@+id/tv_shareItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/iv_share"
-                    android:layout_marginLeft="3dp"
-                    android:text="举报商品"
-                    android:textSize="18sp" />
-            </RelativeLayout>
         </LinearLayout>
-        
     </RelativeLayout>
 
     <LinearLayout
@@ -538,7 +577,6 @@
             android:text="取消"
             android:textColor="@color/skyblue"
             android:textSize="26sp" />
-        
     </LinearLayout>
 
     <LinearLayout
