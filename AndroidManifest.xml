@@ -12,7 +12,7 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-    <uses-permission android:name ="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="com.example.tx.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -50,7 +50,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    
+
     <!-- 分享 相关权限 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
@@ -150,11 +150,12 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="6d84f47c183519dc6b0e2e72" />
-        
-        <!-- 以下是友盟分享  -->
-        
+
+        <!-- 以下是友盟分享 -->
+
+
         <!-- ###################注册SDK使用的Activity###################### -->
-        <!--分享编辑页-->
+        <!-- 分享编辑页 -->
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
             android:configChanges="orientation|keyboard"
@@ -173,32 +174,33 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
-                <data android:scheme="tencent100424468" /> 
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID -->
+                <data android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:screenOrientation="portrait">
-        </activity>
-        <!-- 微信平台  -->
         <activity
-		   android:name="com.example.tx.WXEntryActivity"
-		   android:theme="@android:style/Theme.Translucent.NoTitleBar"
-		   android:configChanges="keyboardHidden|orientation|screenSize"
-		   android:exported="true"
-		   android:screenOrientation="portrait" />
-        
-        <!-- 授权 SSO -->
-        <activity android:name="com.renn.rennsdk.oauth.OAuthActivity"
-				android:configChanges="orientation|navigation|keyboardHidden"/>
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <!-- 微信平台 -->
+        <activity
+            android:name="com.example.tx.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-	    <!-- ###################添加UmengAppkey###################### -->
-	        <meta-data
-	            android:name="UMENG_APPKEY"
-	            android:value="5459839dfd98c5ba5c00335c" >
-	        </meta-data>
-	
+        <!-- 授权 SSO -->
+        <activity
+            android:name="com.renn.rennsdk.oauth.OAuthActivity"
+            android:configChanges="orientation|navigation|keyboardHidden" />
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5459839dfd98c5ba5c00335c" >
+        </meta-data>
 
         <activity android:name="com.example.tx.activity.Welcome" >
             <intent-filter>
@@ -363,6 +365,10 @@
         <activity
             android:name="com.example.tx.StoreItemDetailActivity"
             android:label="@string/title_activity_store_item_detail" >
+        </activity>
+        <activity
+            android:name="com.example.tx.NewDiscoveryActivity"
+            android:label="@string/title_activity_new_discovery" >
         </activity>
     </application>
 

@@ -50,14 +50,14 @@
 	                    android:layout_marginTop="2.0dip"
                         android:checked="true"
                         android:drawableTop="@drawable/market_ic"
-                        android:text="@string/market"/>
+                        android:text="@string/shop"/>
 
                     <RadioButton
                         android:id="@+id/radio1"
 	                    android:layout_marginTop="2.0dip"
                         style="@style/main_tab_bottom"
                         android:drawableTop="@drawable/discovery_ic"
-                        android:text="@string/discovery" />
+                        android:text="@string/market" />
 
                     <RadioButton
                         android:id="@+id/radio2"
@@ -71,7 +71,7 @@
                         style="@style/main_tab_bottom"
 	                    android:layout_marginTop="2.0dip"
                         android:drawableTop="@drawable/message_ic"
-                        android:text="@string/message" />
+                        android:text="@string/discovery" />
 
                     <RadioButton
                         android:id="@+id/radio4"

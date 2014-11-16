@@ -1,0 +1,121 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:orientation="vertical"
+    tools:context=".NewDiscoveryActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/head_padding_bottom"
+        android:paddingTop="@dimen/head_padding_top" >
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/headtext"
+            android:text="发现" />
+    </RelativeLayout>
+
+    <!-- 我是顶部栏和下面内容的分割线 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_h2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <RelativeLayout
+            android:id="@+id/rl_talk"
+            style="@style/panel"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/topics" />
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"
+                android:text="树洞" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/rl_activity"
+            style="@style/panel"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tower" />
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"
+                android:text="活动" />
+        </RelativeLayout>
+    </LinearLayout>
+    
+    <!-- 第二行 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+        
+        <RelativeLayout
+            android:id="@+id/rl_message"
+            style="@style/panel"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tower" />
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"
+                android:text="消息" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/rl_more"
+            style="@style/panel"
+            android:visibility="invisible"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tower" />
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"
+                android:text="消息" />
+        </RelativeLayout>
+        
+     </LinearLayout>
+
+</LinearLayout>
