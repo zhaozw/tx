@@ -105,6 +105,10 @@ public class ForgetActivity extends BaseActivity {
 		tv_complete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if((tv_valicode.getText().toString()).equals(valicode))
+					v_valicode=true;
+				else
+					v_valicode=false;
 				if(v_account)
 				{
 					if(check_passwordCfm)
@@ -129,11 +133,11 @@ public class ForgetActivity extends BaseActivity {
 									{
 										if(result.getInt("status")!=0)
 										{
-											makeToast("修改密码成功");
+											makeToast(result.getString("description"));
 											finish();
 										}
 										else
-											makeToast("重置失败："+result.getString("description"));
+											makeToast(result.getString("description"));
 									}
 									catch(Exception e)
 									{
@@ -224,13 +228,13 @@ public class ForgetActivity extends BaseActivity {
 		tv_valicode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				if(!hasFocus)
-				{
+//				if(!hasFocus)
+//				{
 					if((((TextView)v).getText().toString()).equals(valicode))
 						v_valicode=true;
 					else
 						v_valicode=false;
-				}
+//				}
 			}
 		});
 
