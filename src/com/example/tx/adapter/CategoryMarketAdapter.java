@@ -27,6 +27,7 @@ public class CategoryMarketAdapter extends BaseAdapter {
 	private List<Category> msgs;
 	private Context context;
 	private GridView gv;
+	//在市场界面里面显示的各个图标
 	private int[] drawables = {
 			R.drawable.k1,
 			R.drawable.k2,

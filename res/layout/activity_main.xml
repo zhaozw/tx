@@ -57,7 +57,7 @@
 	                    android:layout_marginTop="2.0dip"
                         style="@style/main_tab_bottom"
                         android:drawableTop="@drawable/discovery_ic"
-                        android:text="@string/discovery" />
+                        android:text="@string/secondhand" />
 
                     <RadioButton
                         android:id="@+id/radio2"

@@ -57,11 +57,9 @@ public class C
 //	static public final String IP = "http://bittaoxue.sinaapp.com";
 
 //	static public final String IP="http://112.126.67.182:8080";
-//	static public final String IP="http://125.116.16.122:8888";
-//	static public final String IP="http://10.12.38.114:8080";
-	static public final String IP="http://112.126.67.182:8080";
+//	static public final String IP="http://112.126.67.182:8080";
 //	static public final String IP="http://114.215.150.9:8080";
-//	static public final String IP="http://114.215.150.9:8080/";//
+	static public final String IP="http://114.215.150.9:8080/";//
 //
 	
 	//WebView地址
@@ -130,7 +128,7 @@ public class C
 	//市场
 		//获取homepageimage
 		static public final String URLget_homepage_images = IP + "/Market/GetHomePageImages";
-		//获取所有善品种类
+		//获取所有商品种类
 		static public final String URLget_categories=IP+"/Market/GetCategories";
 		//获取商品列表
 		static public final String URLget_items=IP+"/Market/GetItems";

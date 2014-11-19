@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.tx.ShoppingCart.SetDataThread;
-import com.example.tx.activity.DiscoveryActivity;
+import com.example.tx.activity.SecondHandActivity;
 import com.example.tx.activity.MainActivity;
 import com.example.tx.activity.StoreDetailActivity;
 import com.example.tx.activity.StoresActivity;

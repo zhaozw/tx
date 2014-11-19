@@ -8,34 +8,33 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.example.tx.R;
-import com.example.tx.adapter.MarketListAdapter;
-import com.example.tx.dto.Category;
-import com.example.tx.dto.Categorys;
-import com.example.tx.dto.Item;
-import com.example.tx.dto.Image;
-import com.example.tx.dto.User;
-import com.example.tx.util.BaseActivity;
-import com.example.tx.util.C;
-import com.example.tx.view.RefreshListView.RefreshListener;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.support.v4.widget.SwipeRefreshLayout;
 
-public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+import com.example.tx.R;
+import com.example.tx.adapter.MarketListAdapter;
+import com.example.tx.dto.Categorys;
+import com.example.tx.dto.Image;
+import com.example.tx.dto.Item;
+import com.example.tx.dto.User;
+import com.example.tx.util.BaseActivity;
+import com.example.tx.util.C;
+import com.example.tx.view.RefreshListView;
+import com.example.tx.view.RefreshListView.PullToRefreshListener;
+
+public class GoodslistActivity extends BaseActivity  {
 	
 	public static GoodslistActivity that = null;
 	
@@ -46,7 +45,8 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 	private Button b_priceup;
 	private ListView lv_home;
 	private TextView tv_market_empty;
-	private SwipeRefreshLayout swipe_container;
+	
+	private RefreshListView freshListView;
 	
 	private String title;
 	
@@ -57,6 +57,13 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 	
 	//排序方式
 	public int order;
+	
+	//设置每个页面显示商品的个数
+	private int startNumber;
+	private int endNumber;
+	
+	//最后一条数据显示的id
+	public int lastItemId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +80,8 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 		b_priceup = (Button)findViewById(R.id.b_priceup);
 		lv_home = (ListView)findViewById(R.id.lv_home);
 		tv_market_empty = (TextView)findViewById(R.id.tv_market_empty);
-		swipe_container = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+		//刷新
+		freshListView = (RefreshListView) findViewById(R.id.swipe_container);
 		
 		//获取市场传来的信息
 		Intent intent = getIntent();
@@ -87,10 +95,17 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 		
 		
 		//设置下拉刷新
-		swipe_container.setOnRefreshListener(this);
-		swipe_container.setColorScheme(android.R.color.holo_blue_bright,
-				android.R.color.holo_green_light, android.R.color.holo_orange_light,
-				android.R.color.holo_red_light);
+		freshListView.setOnRefreshListener(new PullToRefreshListener() {
+			
+			@Override
+			//下面实现刷新逻辑
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				new SetDataListThread().start();
+				freshListView.finishRefreshing();
+			}
+		},0);   //用第二个参数标识不同的界面
+	
 		
 		
 		//三个排序按钮的功能
@@ -180,7 +195,7 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 				lv_home.setSelection(pos);
 				if(msgs.size() == 0)
 					mHandler.sendEmptyMessage(88);
-				SetRefreshingFalse();
+				//SetRefreshingFalse();
 				break;
 				
 			case 1:
@@ -227,10 +242,12 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 					//Log.d("all","all");
 				}
 				p.put("order", order);
+				p.put("cntStart","0");
+				p.put("cntEnd", "20");
 				JSONObject res = C.asyncPost(C.URLget_items, p);
 				if( !(res.getInt("status") == 0) ) {
 					mHandler.sendToast("网络有问题！");
-					SetRefreshingFalse();
+					//SetRefreshingFalse();
 					return ;
 				}
 				
@@ -299,12 +316,12 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 		getMenuInflater().inflate(R.menu.goodslist, menu);
 		return true;
 	}
-
+/*
 	@Override
 	public void onRefresh() {
 		mHandler.sendEmptyMessage(1);
 	}
-	
+
 	public void SetRefreshingFalse(){
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -313,5 +330,6 @@ public class GoodslistActivity extends BaseActivity implements SwipeRefreshLayou
 			}
 		}, 1000);
 	}
-
+	
+*/
 }

@@ -67,19 +67,22 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		String string_market=getString(R.string.market);
 		tab1.setIndicator(string_market);
 		Intent it1=new Intent(this,MarketActivity.class);
+		//tab里面显示的是各个activity的主要内容
+		//将一个intent对象作为这个tab选项卡的内容，这样就可以实现activity之间跳转
 		tab1.setContent(it1);
 		tabhost.addTab(tab1);
-		tabhost.addTab(tabhost.newTabSpec("tab1").setIndicator(getString(R.string.discovery)).setContent(new Intent(this,DiscoveryActivity.class)));
+		tabhost.addTab(tabhost.newTabSpec("tab1").setIndicator(getString(R.string.secondhand)).setContent(new Intent(this,SecondHandActivity.class)));
 		tabhost.addTab(tabhost.newTabSpec("tab2").setIndicator(getString(R.string.add)).setContent(new Intent(this,AddActivity.class)));
 		tabhost.addTab(tabhost.newTabSpec("tab3").setIndicator(getString(R.string.message)).setContent(new Intent(this,MessageActivity.class)));
 		tabhost.addTab(tabhost.newTabSpec("tab4").setIndicator(getString(R.string.mine)).setContent(new Intent(this,MineActivity.class)));
 		
-		((RadioButton) findViewById(R.id.radio0)).setOnCheckedChangeListener(this);
+		//最下面五个选择
 		radio0=((RadioButton) findViewById(R.id.radio0));
 		radio4=((RadioButton) findViewById(R.id.radio4));
 		radio3=((RadioButton) findViewById(R.id.radio3));
 		radio2=((RadioButton) findViewById(R.id.radio2));
 		radio1=((RadioButton) findViewById(R.id.radio1));
+		((RadioButton) findViewById(R.id.radio0)).setOnCheckedChangeListener(this);
 		((RadioButton) findViewById(R.id.radio1)).setOnCheckedChangeListener(this);
 		((RadioButton) findViewById(R.id.radio2)).setOnCheckedChangeListener(this);
 		((RadioButton) findViewById(R.id.radio3)).setOnCheckedChangeListener(this);
@@ -106,7 +109,7 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 				currenttag = 1;
 				tabhost.setCurrentTabByTag("tab1");
 				break;
-			case R.id.radio2:
+			case R.id.radio2:      
 				//根据是否登录决定是否跳转
 				if(C.logged == false){
 					AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
@@ -162,7 +165,7 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 0:
-				if(num > 0){
+				if(num > 0){  //显示消息提醒的个数
 					tv_messagenum.setVisibility(View.VISIBLE);
 					tv_messagenum.setText(String.valueOf(num));
 					

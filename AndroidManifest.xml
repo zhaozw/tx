@@ -159,7 +159,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.tx.activity.DiscoveryActivity"
+            android:name="com.example.tx.activity.SecondHandActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity

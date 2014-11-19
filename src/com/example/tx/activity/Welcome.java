@@ -62,7 +62,8 @@ public class Welcome extends Activity {
 	@Override
 	protected void onResume()
 	{
-		super.onResume();
 		JPushInterface.onResume(this);
+		super.onResume();
+		
 	}
 }

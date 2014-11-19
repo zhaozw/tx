@@ -7,11 +7,16 @@
     <string name="title_activity_discovery">DiscoveryActivity</string>
     <string name="title_activity_message">MessageActivity</string>
     <string name="title_activity_mine">MineActivity</string>
-    <string name="mine">我</string>
+    
+    <string name="market">市场</string>
     <string name="message">消息</string>
+    
+    <string name="shop">商铺</string>
+ 	<string name="secondhand">二手</string> 
     <string name="add">添加</string>
     <string name="discovery">发现</string>
-    <string name="market">市场</string>
+    <string name="mine">我</string>
+   <string name="itemcount">共%1$s件</string>
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_mine_login">MainActivity</string>
     <string name="loading">装载中…</string>
@@ -30,6 +35,16 @@
     <string name="title_activity_forget">ForgetActivity</string>
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_user_detail_infor">UserDetailInfor</string>
+    
+    <!-- 自定义下拉刷新类的字段 -->
+	<string name="pull_to_refresh">下拉可以刷新</string>
+	<string name="release_to_refresh">释放立即刷新</string>
+	<string name="refreshing">正在刷新…</string>
+	<string name="not_updated_yet">暂未更新过</string>
+	<string name="updated_at">上次更新于%1$s前</string>
+	<string name="updated_just_now">刚刚更新</string>
+	<string name="time_error">时间有问题</string>
+	
     <string name="app_list_header_refresh_down">下拉刷新</string>
     <string name="app_list_header_refresh_last_update">释放刷新</string>
     <string name="title_activity_modify_password">ModifyPasswordActivity</string>

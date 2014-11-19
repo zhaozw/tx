@@ -122,7 +122,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 		});
 		
 		gv_category = (MyGridView) findViewById(R.id.GV_category);
-		
+		//点击市场中部商品列表里面的选项？
 		gv_category.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
@@ -171,6 +171,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 
 	@SuppressWarnings("deprecation")
 	@Override
+	//设置图片显示比例
 	public View makeView() {
 		final ImageView i = new ImageView(this);  
         i.setBackgroundColor(0xff000000);  
@@ -199,12 +200,12 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
                 }else{  
                 	is_markettop.setInAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.left_in));  
                     is_markettop.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.right_out));  
-                    currentPosition = bitcount - 1;  
+                    currentPosition = bitcount - 1;    //循环显示图片，这个currentPosition记录的是图片的编号
                     setdrawable();
                 }  
             }   
               
-            if(lastX < downX){  
+            if(lastX < downX){    //下一张图片
                 if(currentPosition < bitcount - 1){  
                 	is_markettop.setInAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.right_in));  
                 	is_markettop.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.left_out));  
@@ -213,7 +214,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
                 }else{  
                 	is_markettop.setInAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.right_in));  
                     is_markettop.setOutAnimation(AnimationUtils.loadAnimation(getApplication(), R.anim.left_out));  
-                    currentPosition = 0;  
+                    currentPosition = 0;  //刚才显示的是最后一张
                     setdrawable();
                 }  
             }  
@@ -246,11 +247,13 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 				
 				break;
 			case 44:
+				//填充imageswitcher的图片
 				tips = new ImageView[bitcount];
 				for(int i=0; i<bitcount; i++){  
 		            ImageView mImageView = new ImageView(MarketActivity.this);  
 		            tips[i] = mImageView;  
 		            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		           //左右边距
 		            layoutParams.rightMargin = 3;  
 		            layoutParams.leftMargin = 3;  
 		              
@@ -422,7 +425,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 	
 	public void setdrawable(){
 		if(bitmaps == null){
-			//makeToast("请检查网络连接！");
+			makeToast("请检查网络连接！");
 			return;
 		}
 		//Log.d("setdrawable","ok---"+currentPosition+"---"+bitmaps.length);
