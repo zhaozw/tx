@@ -8,13 +8,18 @@ import com.example.tx.util.C;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.*;
 
 public class Welcome extends Activity {
 	
 	public static Welcome that;
+	public static boolean firstInstall;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -26,6 +31,7 @@ public class Welcome extends Activity {
 		
         JPushInterface.init(this);
         JPushInterface.setDebugMode(true);
+        
 		
 
 		SharedPreferences sp=getSharedPreferences("TaoxuePref", MODE_PRIVATE);
@@ -39,6 +45,18 @@ public class Welcome extends Activity {
 			C.userId=sp.getString("userId", "");
 			C.location=sp.getString("location", "");
 		}
+		
+		//查看是否重新安装其他版本了
+		if(!getVersion().equals(sp.getString("versionname", "0"))){
+			firstInstall = true;
+			Editor editor=sp.edit();
+			editor.putString("versionname", getVersion());
+			editor.commit();
+		}
+		else{
+			firstInstall = false;
+		}
+		
 		
 		new Handler().postDelayed(new Runnable()
 		{
@@ -65,5 +83,21 @@ public class Welcome extends Activity {
 		JPushInterface.onResume(this);
 		super.onResume();
 		
+	}
+	
+	/**
+	 * 获取版本号
+	 * @return 当前应用的版本号
+	 */
+	public String getVersion() {
+	    try {
+	        PackageManager manager = this.getPackageManager();
+	        PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+	        String version = info.versionName;
+	        return version;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "0";
+	    }
 	}
 }

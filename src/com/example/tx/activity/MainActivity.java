@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import cn.jpush.android.api.JPushInterface;
 
+import com.example.tx.NewDiscoveryActivity;
 import com.example.tx.R;
 import com.example.tx.util.C;
 
@@ -73,7 +74,7 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 		tabhost.addTab(tab1);
 		tabhost.addTab(tabhost.newTabSpec("tab1").setIndicator(getString(R.string.secondhand)).setContent(new Intent(this,SecondHandActivity.class)));
 		tabhost.addTab(tabhost.newTabSpec("tab2").setIndicator(getString(R.string.add)).setContent(new Intent(this,AddActivity.class)));
-		tabhost.addTab(tabhost.newTabSpec("tab3").setIndicator(getString(R.string.message)).setContent(new Intent(this,MessageActivity.class)));
+		tabhost.addTab(tabhost.newTabSpec("tab3").setIndicator(getString(R.string.message)).setContent(new Intent(this,NewDiscoveryActivity.class)));
 		tabhost.addTab(tabhost.newTabSpec("tab4").setIndicator(getString(R.string.mine)).setContent(new Intent(this,MineActivity.class)));
 		
 		//最下面五个选择
@@ -143,9 +144,9 @@ public class MainActivity extends TabActivity implements OnCheckedChangeListener
 			case R.id.radio3:
 				currenttag = 3;
 				tabhost.setCurrentTabByTag("tab3");
-				if(C.logged)
-					MessageActivity.that.mHandler.sendEmptyMessage(1);
-				Log.d("mainref","ref");
+//				if(C.logged)
+//					MessageActivity.that.mHandler.sendEmptyMessage(1);
+//				Log.d("mainref","ref");
 				break;
 			case R.id.radio4:
 				currenttag = 4;

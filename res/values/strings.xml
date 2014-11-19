@@ -14,9 +14,14 @@
     <string name="shop">商铺</string>
  	<string name="secondhand">二手</string> 
     <string name="add">添加</string>
+    <string name="shop">商铺</string>
     <string name="discovery">发现</string>
+<<<<<<< HEAD
     <string name="mine">我</string>
    <string name="itemcount">共%1$s件</string>
+=======
+    <string name="market">二手</string>
+>>>>>>> origin/master
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_mine_login">MainActivity</string>
     <string name="loading">装载中…</string>
@@ -173,5 +178,6 @@
 6.6政策修改：\n
 淘学保留对本政策做出不时修改的权利。</string>
     <string name="title_activity_store_item_detail">StoreItemDetailActivity</string>
+    <string name="title_activity_new_discovery">NewDiscoveryActivity</string>
 
 </resources>
