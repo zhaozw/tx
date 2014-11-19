@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/gainsboro"
     tools:context="${packageName}.${activityClass}" >
 
     <RelativeLayout
@@ -19,7 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="市场"
+            android:text="商铺"
             android:textSize="25sp" />
 
         <ImageButton
@@ -43,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:background="@color/white">
+        android:background="@color/gainsboro">
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,7 +56,8 @@
     <RelativeLayout
         android:id="@+id/rl_markettop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
 
         <ImageSwitcher
             android:id="@+id/is_markettop"
@@ -82,7 +84,243 @@
 	        </LinearLayout>      
 	    </RelativeLayout>  
     </RelativeLayout>
-
+    <!-- modified by fjb add -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:background="@color/gainsboro"
+    	android:layout_marginTop="0.01dp"
+        >
+        <LinearLayout 
+            android:id="@+id/ll_storeinschool"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="0.01dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_streinschool"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/shop_xn_50"
+                />
+            <TextView 
+                android:id="@+id/tv_storeinschool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="校内商铺"
+                />
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/ll_storeoutschool"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="0.01dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_streoutschool"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/cottage_xw_48"
+                />
+            <TextView 
+                android:id="@+id/tv_storeoutschool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="校外商铺"
+                />
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/ll_studentstore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="0.01dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_studentstore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/shopping_dxs_50"
+                />
+            <TextView 
+                android:id="@+id/tv_studentstore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学生商铺"
+                />
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/ll_txstore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_txstore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/shopping_dxs_50"
+                />
+            <TextView 
+                android:id="@+id/tv_txstore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="淘学商铺"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:background="@color/gainsboro"
+    	android:layout_marginTop="30dp"
+        >
+        <LinearLayout 
+            android:id="@+id/ll_hotItems_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="0.01dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_hotItems_1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/loading_1"
+                />
+            <TextView 
+                android:id="@+id/tv_hotItems_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热门商品"
+                android:textSize="10sp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView 
+                android:id="@+id/tv_hotItems_1_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加载中..."
+                android:textSize="10sp"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                />
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/ll_hotItems_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="0.01dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_hotItems_2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/loading_1"
+                />
+            <TextView 
+                android:id="@+id/tv_hotItems_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热门商品"
+                android:textSize="10sp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView 
+                android:id="@+id/tv_hotItems_2_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加载中..."
+                android:textSize="10sp"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                />
+        </LinearLayout>
+        <LinearLayout 
+            android:id="@+id/ll_hotItems_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/categroy_select"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="0.01dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:onClick="true"
+            >
+            <ImageView 
+                android:id="@+id/iv_hotItems_3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/loading_1"
+                />
+            <TextView 
+                android:id="@+id/tv_hotItems_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热门商品"
+                android:textSize="10sp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView 
+                android:id="@+id/tv_hotItems_3_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加载中..."
+                android:textSize="10sp"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                />
+        </LinearLayout>
+       
+    </LinearLayout>
+	<!-- modified by fjb remove
     <com.example.tx.view.MyGridView
         android:id="@+id/GV_category"
         android:layout_width="match_parent"
@@ -95,7 +333,7 @@
         android:verticalSpacing="5dp" >
         
      </com.example.tx.view.MyGridView>
-     
+      -->
     
     </LinearLayout>
     

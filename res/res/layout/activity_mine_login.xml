@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_tab2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/common_title_bar"/>
+	
+    <!-- activity content -->
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:layout_margin="@dimen/activity_margin">
+	
+		    <EditText
+		        android:id="@+id/et_mine_telephone"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/biginput"
+		        android:ems="10"
+		        android:inputType="phone"
+		        android:hint="UU号（即您的手机号）" >
+		
+		        <requestFocus /> 
+		    </EditText>
+		
+		    <EditText
+		        android:id="@+id/et_mine_password"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/biginput"
+		        android:ems="10"
+		        android:inputType="textPassword"
+		        android:hint="密码" />
+
+		   
+		    <Button
+		        android:id="@+id/btn_mine_login"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        style="@style/bigbutton_pri"
+		        android:layout_marginTop="12dp"
+		        android:text="登录" />
+		    
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="@dimen/activity_margin">
+			        
+			    <Switch
+			        android:id="@+id/sw_mine_remember"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+		        	android:textSize="10sp"
+		        	android:textColor="#eeaa00"
+			        android:text="记住密码" />
+			    <Switch
+			        android:id="@+id/sw_mine_autolog"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+		        	android:textSize="10sp"
+		        	android:textColor="#eeaa00"
+			        android:text="自动登录" />
+		        
+		    </LinearLayout>	    
+	        
+	    </LinearLayout>
+	            
+	    
+	    <TextView 
+	        android:id="@+id/tv_mine_forgot"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginBottom="20dp"
+	        android:textSize="15sp"
+	        android:textColor="#eeaa00"
+	        android:text=" 忘记密码？"  />
+	    
+    </RelativeLayout>
+    
+</LinearLayout>

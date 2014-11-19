@@ -1,6 +1,11 @@
 package com.example.tx.activity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.example.tx.R;
+import com.example.tx.R.anim;
 import com.example.tx.adapter.StoresInSchoolAdapter;
 import com.example.tx.dto.Shop;
 import com.example.tx.dto.ShopItem;
@@ -28,9 +34,12 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,14 +51,20 @@ public class StoresActivity extends BaseActivity {
 	private ImageButton ib_back_stores;
 	private ListView lv_stores;
 	private TextView tv_stores_header;
-	
+	//added by fjb
+	private ImageButton ib_service_categroy;
+	private LinearLayout ll_categroy_cover;
+	private LinearLayout ll_shop_categroy;
+	//记录按钮点击状态
+	private	boolean isClicked = false;
 	//商店列表
 	private List<StoreInSchool> msgs;
 	public List<Shop> list_shop;
-	
+	//当前时间
+	private String date;
 	private int type;
 	
-	Bundle b;
+	private Bundle b;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +84,9 @@ public class StoresActivity extends BaseActivity {
 		ib_back_stores = (ImageButton) findViewById(R.id.ib_back_stores);
 		lv_stores = (ListView) findViewById(R.id.lv_stores);
 		tv_stores_header = (TextView) findViewById(R.id.tv_stores_header);
+		ib_service_categroy = (ImageButton) findViewById(R.id.ib_service_categroy);
+		ll_categroy_cover = (LinearLayout) findViewById(R.id.ll_categroy_cover);
+		ll_shop_categroy = (LinearLayout) findViewById(R.id.ll_shop_categroy);
 		// 商铺类型，0表示大学生商铺，1表示校内商铺，2表示校外商铺
 		if(type == 0){
 			tv_stores_header.setText("大学生商铺");
@@ -81,6 +99,45 @@ public class StoresActivity extends BaseActivity {
 		}
 			
 		
+		//点击分类按钮，显示分类列表，added by fjb
+		ib_service_categroy.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Animation animation = AnimationUtils
+						.loadAnimation(StoresActivity.this, isClicked?R.anim.right_out:R.anim.right_in);
+				
+				//列表先消失，再去除阴影
+				ll_shop_categroy.setVisibility(isClicked?View.GONE:View.VISIBLE);
+				ll_categroy_cover.setVisibility(isClicked?View.GONE:View.VISIBLE);
+				
+				//设置动画
+				ll_shop_categroy.startAnimation(animation);
+				isClicked = !isClicked;
+				//点击阴影部分，列表隐藏
+				ll_categroy_cover.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						Animation animation = AnimationUtils
+								.loadAnimation(StoresActivity.this, R.anim.right_out);
+						
+						ll_shop_categroy.startAnimation(animation);
+						ll_shop_categroy.setVisibility(View.GONE);
+						ll_categroy_cover.setVisibility(View.GONE);
+					}
+					
+				});
+				ll_shop_categroy.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						
+					}
+					
+				});
+			}
+		});
 		
 		//事件chuli 
 		ib_back_stores.setOnClickListener(new OnClickListener(){
@@ -102,6 +159,8 @@ public class StoresActivity extends BaseActivity {
 				bundle.putString("name", msgs.get(arg2).name);
 				bundle.putString("shopId",msgs.get(arg2).shopId);
 				bundle.putInt("index",arg2);
+				//added by fjb
+				bundle.putBoolean("isOpen", msgs.get(arg2).isOpen);
 				intent.putExtras(bundle);
 				intent.putExtra("store", b);
 				intent.setClass(StoresActivity.this, StoreDetailActivity.class);
@@ -165,6 +224,10 @@ public class StoresActivity extends BaseActivity {
 			String provider = null;
 			//获得最后一次变化的位置
 			Location location=null;
+			//实时获得时间
+			long networkTS = loctionManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getTime();
+			SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			date = dateFormat.format(new Date(networkTS));
 			
 			try
 			{
@@ -201,8 +264,24 @@ public class StoresActivity extends BaseActivity {
 						String target=null;
 						StoreInSchool sis=new StoreInSchool(shop.getString("shopId"),shop.getString("name"),shop.getString("introduction"),logo);
 						sis.setPrice(String.valueOf(shop.getDouble("price")));
-						msgs.add(sis);
+						sis.setIsOpen(isOpen(date,shop.getString("timeStart"),shop.getString("timeEnd")));
 						
+						msgs.add(sis);
+						Collections.sort(msgs, new Comparator(){
+
+							@Override
+							public int compare(Object lhs, Object rhs) {
+								StoreInSchool msg1 = (StoreInSchool) lhs;
+								StoreInSchool msg2 = (StoreInSchool) rhs;
+								if(msg1.isOpen ^ msg2.isOpen){
+									return msg1.isOpen?-1:1;
+								}else{
+									return 0;
+								}
+								
+							}
+							
+						});
 //						String shopId,String category,String name,String address,String introduction,String registerTime,String logo,
 //						String background,String ownerId,String bulletin,int speed,String timeStart,String timeEnd,int type,String contact,
 //						float price,String target,int orderType,String other,User owner,String[] classes,ShopItem[] items
@@ -240,6 +319,22 @@ public class StoresActivity extends BaseActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.stores, menu);
 		return true;
+	}
+//added by fjb 判断商铺是否营业
+	public boolean isOpen(String date2, String string, String string2) throws ParseException {
+		
+		String currentDate = date2.split(" ")[0];
+		String startTime = string.replace("1970-01-01T", currentDate+" ");
+		String endTime = string2.replace("1970-01-01T", currentDate+" ");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(sdf.parse(date2).before(sdf.parse(startTime))
+					||sdf.parse(date2).after(sdf.parse(endTime))){
+				return false;
+		}
+		else{
+			return true;
+		}
+		
 	}
 
 }

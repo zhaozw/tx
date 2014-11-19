@@ -50,46 +50,46 @@ public class DiscoveryActivity extends BaseActivity {
 			
 		});
 		
-		((LinearLayout) findViewById(R.id.ll_storeinscholl)).setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(DiscoveryActivity.this, StoresActivity.class);
-//				intent.putExtra("type", 1);
-				Bundle b=new Bundle();
-				b.putInt("type", 1);
-				intent.putExtra("store", b);
-				startActivity(intent);
-			}
-			
-		});
-		
-		((LinearLayout) findViewById(R.id.ll_studentstore)).setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(DiscoveryActivity.this, StoresActivity.class);
-//				intent.putExtra("type", 0);
-				Bundle b=new Bundle();
-				b.putInt("type", 0);
-				intent.putExtra("store", b);
-				startActivity(intent);
-			}
-			
-		});
-		
-		((LinearLayout) findViewById(R.id.ll_storeoutschool)).setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(DiscoveryActivity.this, StoresActivity.class);
-//				intent.putExtra("type", 2);
-				Bundle b=new Bundle();
-				b.putInt("type", 2);
-				intent.putExtra("store", b);
-				startActivity(intent);
-			}
-			
-		});
+//		((LinearLayout) findViewById(R.id.ll_storeinscholl)).setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent(DiscoveryActivity.this, StoresActivity.class);
+////				intent.putExtra("type", 1);
+//				Bundle b=new Bundle();
+//				b.putInt("type", 1);
+//				intent.putExtra("store", b);
+//				startActivity(intent);
+//			}
+//			
+//		});
+//		
+//		((LinearLayout) findViewById(R.id.ll_studentstore)).setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent(DiscoveryActivity.this, StoresActivity.class);
+////				intent.putExtra("type", 0);
+//				Bundle b=new Bundle();
+//				b.putInt("type", 0);
+//				intent.putExtra("store", b);
+//				startActivity(intent);
+//			}
+//			
+//		});
+//		
+//		((LinearLayout) findViewById(R.id.ll_storeoutschool)).setOnClickListener(new OnClickListener(){
+//
+//			@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent(DiscoveryActivity.this, StoresActivity.class);
+////				intent.putExtra("type", 2);
+//				Bundle b=new Bundle();
+//				b.putInt("type", 2);
+//				intent.putExtra("store", b);
+//				startActivity(intent);
+//			}
+//			
+//		});
 	}
 }

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-
     <string name="app_name">淘学</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_market">MarketActivity</string>
@@ -10,9 +9,8 @@
     <string name="mine">我</string>
     <string name="message">消息</string>
     <string name="add">添加</string>
-    <string name="shop">商铺</string>
     <string name="discovery">发现</string>
-    <string name="market">二手</string>
+    <string name="market">商铺</string>
     <string name="title_activity_add">AddActivity</string>
     <string name="title_activity_mine_login">MainActivity</string>
     <string name="loading">装载中…</string>
@@ -159,6 +157,4 @@
 6.6政策修改：\n
 淘学保留对本政策做出不时修改的权利。</string>
     <string name="title_activity_store_item_detail">StoreItemDetailActivity</string>
-    <string name="title_activity_new_discovery">NewDiscoveryActivity</string>
-
 </resources>

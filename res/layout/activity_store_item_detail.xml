@@ -38,7 +38,17 @@
                 android:layout_marginTop="5sp"
                 android:background="@color/white"
                 android:src="@drawable/back" />
-
+			
+            <ImageButton
+                android:id="@+id/ib_more_storedetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5sp"
+                android:layout_marginTop="5sp"
+                android:background="@color/white"
+                android:src="@drawable/more" />
             
         </RelativeLayout>
 
@@ -284,7 +294,7 @@
             android:padding="8dp" >
 
             <RelativeLayout
-                android:id="@+id/RelativeLayout1"
+                android:id="@+id/RelativeLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -310,7 +320,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/RelativeLayout1"
+                android:id="@+id/RelativeLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

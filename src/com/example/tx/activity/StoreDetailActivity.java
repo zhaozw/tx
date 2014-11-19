@@ -39,6 +39,7 @@ import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StoreDetailActivity extends BaseActivity {
 	
@@ -69,6 +70,7 @@ public class StoreDetailActivity extends BaseActivity {
 	public String storename = "";
 	public String shopId;
 	public int index;
+	public boolean isOpen;
 	public Shop theShop;
 	
 	//点击跳转到详情页，对应的商品
@@ -92,8 +94,22 @@ public class StoreDetailActivity extends BaseActivity {
 		shopId=bundle.getString("shopId");
 		Log.d("cart-shopid",shopId);
 		index = bundle.getInt("index");
+		//added by fjb
+		isOpen = bundle.getBoolean("isOpen");
 		theShop = StoresActivity.that.list_shop.get(index);
-		
+		//弹出提示
+		if(!isOpen){
+			new AlertDialog
+			.Builder(StoreDetailActivity.this)
+			.setTitle("提示")
+			.setMessage("该商铺已经打烊，请在营业时间内访问！")
+			.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			}).show();
+		}
 		
 		//初始化
 		groupData = new ArrayList<SimpleStoreCategory>();
@@ -165,8 +181,20 @@ public class StoreDetailActivity extends BaseActivity {
 				int totalcount=0;
 				for(int i=0;i<so.items.size();i++)
 					totalcount+=Integer.valueOf(so.items.get(i).get("quantity").toString());
-				if(totalcount<=0)
-				{
+				//提示已经打烊
+				if(!isOpen){
+					new AlertDialog
+					.Builder(StoreDetailActivity.this)
+					.setTitle("提示")
+					.setMessage("该商铺已经打烊，请在营业时间内访问！")
+					.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					}).show();
+				}
+				else if(totalcount<=0){
 					new AlertDialog
 					.Builder(StoreDetailActivity.this)
 					.setTitle("提示")
@@ -286,6 +314,13 @@ public class StoreDetailActivity extends BaseActivity {
 							}
 							ShopItem si=new ShopItem(o.getString("itemId"),o.getString("itemName"),(float)o.getDouble("price"),o.getString("details"),
 									o.getString("clazz"),o.getString("shopId"),o.getInt("status"),images,null);
+							if(o.has("stock")){
+								si.stock = o.getLong("stock");
+							}
+							else{
+								//表示没有库存限制
+								si.stock = -1;
+							}
 							siList.add(si);
 						}
 						groupData.add(new SimpleStoreCategory(key, items.length()));

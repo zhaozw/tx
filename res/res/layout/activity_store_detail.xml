@@ -1,0 +1,187 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".StoreDetailActivity" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_total"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/head_padding_bottom"
+        android:paddingTop="@dimen/head_padding_top" >
+
+        <TextView
+            android:id="@+id/tv_store_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ib_buy_storedetail"
+            android:layout_toRightOf="@+id/ib_backstoredetail"
+            android:ellipsize="end"
+            android:gravity="center"
+            
+            android:singleLine="true"
+            android:text="商店名称"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ib_backstoredetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="5sp"
+            android:background="@color/white"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/ib_buy_storedetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="5sp"
+            android:textColor="@color/lightskyblue"
+            android:background="@color/white"
+            android:textSize="17sp"
+            android:text="去下单" />
+    </RelativeLayout>
+
+    <!-- 我是顶部栏和下面内容的分割线 -->
+
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_h2"
+        android:orientation="vertical" />
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:background="@color/white" >
+        
+        <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:focusable="true"
+	        android:focusableInTouchMode="true"
+	        android:orientation="vertical">
+    
+    <TextView 
+        android:id="@+id/tv_shop_bolletin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="18sp"
+        android:text="公告："/>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/line_h2"
+        android:orientation="vertical" />
+    
+    <TextView 
+        android:id="@+id/tv_shop_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textSize="18sp"
+        android:text="起送价："/>
+    
+    <TextView 
+        android:id="@+id/tv_shop_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="18sp"
+        android:text="送货速度："/>
+    
+    <TextView 
+        android:id="@+id/tv_shop_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="18sp"
+        android:text="送货时间："/>
+    
+    <TextView 
+        android:id="@+id/tv_shop_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="18sp"
+        android:text="商店电话："/>
+    
+    <TextView 
+        android:id="@+id/tv_shop_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="18sp"
+        android:text="商店地址："/>
+    
+    
+    <com.example.tx.view.MyExpandableListView
+        android:id="@+id/elv_store_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:divider="@drawable/line_h2"
+        android:dividerHeight="1px" >
+        
+    </com.example.tx.view.MyExpandableListView>
+    
+    <TextView
+        android:id="@+id/tv_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="该小店暂时没有商品。。。" />
+    
+		</LinearLayout>
+    </ScrollView>
+    
+     
+
+	</LinearLayout>
+	<TextView
+        android:id="@+id/tv_total"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/lightskyblue"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:text="总共0元" />
+</RelativeLayout>

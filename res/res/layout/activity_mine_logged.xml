@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- title bar -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/commen_title_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ddd" >
+	
+    <include layout="@layout/common_title_bar"/>
+
+    <LinearLayout
+        android:id="@+id/mine_bar"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+	    android:layout_height="100dp"
+        android:background="@drawable/mine_layout_border" >
+
+        <ImageView
+            android:id="@+id/img_mine_avatar"
+            style="@style/logged_img"
+	        android:adjustViewBounds="true"
+	        android:paddingTop="3dp"
+	        android:paddingBottom="3dp"
+            android:src="@drawable/item_pic_default"
+	        android:contentDescription="@string/loading" />       
+        
+	        <TextView
+	            android:id="@+id/txt_mine_name"
+	            android:layout_height="wrap_content"
+	            style="@style/logged_text"
+	            android:text="" />
+
+	        <ImageButton
+	            android:id="@+id/txt_mine_detail"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_gravity="center"
+	            android:src="@drawable/item_mine_arrow"
+	            android:layout_marginRight="10dp"
+	            android:background="#fff" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/mine_commodity_bar"
+        style="@style/mine_linearlayout"
+		android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+		android:layout_marginTop="20dp"
+        android:background="@drawable/mine_layout_border"
+        >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/menu_50" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.6"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:text="我的商品" />
+
+	        <ImageButton
+	            android:id="@+id/txt_mine_commodity"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_gravity="right"
+	            android:gravity="right"
+	            android:src="@drawable/item_mine_arrow"
+	            android:layout_marginRight="10dp"
+	            android:background="#fff" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+
+        android:id="@+id/mine_order_bar"
+        style="@style/mine_linearlayout"
+		android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/mine_layout_border"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/bill_48" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.6"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:text="我的订单" />
+
+	        <ImageButton
+	            android:id="@+id/txt_mine_order"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:layout_gravity="right"
+	            android:gravity="right"
+	            android:src="@drawable/item_mine_arrow"
+	            android:layout_marginRight="10dp"
+	            android:background="#fff" />
+        
+    </LinearLayout>
+    
+    
+    <LinearLayout
+
+        android:id="@+id/mine_seller_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/mine_layout_border"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/group_50" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:textColor="#000"
+            android:text="我关注的卖家" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/item_mine_arrow"
+	        android:layout_marginRight="10dp"
+        	android:background="#fff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mine_favourite_bar"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_height="40dp"
+		android:layout_width="match_parent"
+        android:background="@drawable/mine_layout_border">
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/like_50" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:text="我收藏的宝贝" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/item_mine_arrow"
+			android:layout_marginRight="10dp"
+        	android:background="#fff" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/setting"
+        android:background="@drawable/mine_layout_border"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+		android:layout_width="match_parent"
+		android:layout_marginTop="20dp"
+        >
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/settings_50" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:layout_gravity="center"
+            android:text="设置" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/item_mine_arrow"
+			android:layout_marginRight="10dp"
+        	android:background="#fff" />
+    </LinearLayout>
+
+</LinearLayout>

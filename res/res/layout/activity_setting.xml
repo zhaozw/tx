@@ -1,0 +1,133 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <include
+        android:id="@+id/include1"
+        layout="@layout/common_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/include1"
+        android:orientation="vertical"
+        android:background="#ddd" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+        android:paddingLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/mine_layout_border" >
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/help_50"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/setting_help"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
+                android:textSize="20sp"
+                android:text="帮助" />
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+        android:paddingLeft="15dp"
+            android:background="@drawable/mine_layout_border" >
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/pen_50"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/setting_opinion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
+                android:textSize="20sp"
+                android:text="意见反馈" />
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+        android:paddingLeft="15dp"
+            android:background="@drawable/mine_layout_border" >
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/info_50"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/setting_about"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
+                android:textSize="20sp"
+                android:text="关于" />
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/mine_layout_border" >
+
+
+            <TextView
+                android:id="@+id/setting_ModifyPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="@color/royalblue"
+                android:text="修改密码" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mine_layout_border" >
+
+
+            <TextView
+                android:id="@+id/setting_logout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="@color/royalblue"
+                android:text="退出登录" />
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>

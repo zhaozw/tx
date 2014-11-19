@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/head_padding_bottom"
+        android:paddingTop="@dimen/head_padding_top" >
+
+        <TextView
+            android:id="@+id/TextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="市场"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/ib_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15sp"
+            android:layout_centerVertical="true"
+            android:background="@color/white"
+            android:src="@drawable/search_key_drawleft" />
+    </RelativeLayout>
+    
+    <!-- 我是顶部栏和下面内容的分割线 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_h2" />
+    
+    <com.example.tx.view.MyScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="@color/white">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_markettop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageSwitcher
+            android:id="@+id/is_markettop"
+            android:layout_width="match_parent"
+            android:layout_height="180sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+        </ImageSwitcher>
+        
+        <RelativeLayout      
+	        android:layout_width="match_parent"      
+	        android:layout_height="wrap_content"   
+	        android:orientation="vertical" >      
+	        <LinearLayout      
+	            android:id="@+id/ll_viewGroup"      
+	            android:layout_width="fill_parent"      
+	            android:layout_height="wrap_content"      
+	            android:layout_alignParentRight="true"    
+	            android:layout_marginRight="20sp"
+	            android:layout_marginTop="150sp"    
+	            android:gravity="right"
+	            android:orientation="horizontal" >
+	            
+	        </LinearLayout>      
+	    </RelativeLayout>  
+    </RelativeLayout>
+
+    <com.example.tx.view.MyGridView
+        android:id="@+id/GV_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="6dp"
+        android:background="@color/white"
+        android:horizontalSpacing="6dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" >
+        
+     </com.example.tx.view.MyGridView>
+     
+    
+    </LinearLayout>
+    
+	</com.example.tx.view.MyScrollView>
+
+</LinearLayout>

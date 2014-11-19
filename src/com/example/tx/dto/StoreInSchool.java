@@ -6,6 +6,8 @@ public class StoreInSchool {
 	public String description;
 	public String avatar;
 	public String price;
+	//added by fjb
+	public boolean isOpen;
 	
 	public StoreInSchool(String shopId,String name, String description , String avatar){
 		this.name = name;
@@ -15,5 +17,9 @@ public class StoreInSchool {
 	}
 	public void setPrice(String price){
 		this.price = price;
+	}
+	//设置是否营业标志位
+	public void setIsOpen(boolean isOpen){
+		this.isOpen = isOpen;
 	}
 }

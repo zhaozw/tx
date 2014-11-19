@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,6 +60,13 @@ public class StoresInSchoolAdapter extends BaseAdapter {
 			TextView tv_storename = (TextView) convertView.findViewById(R.id.tv_storename);
 			TextView tv_storedes = (TextView) convertView.findViewById(R.id.tv_storedes);
 			final ImageView im_logo=(ImageView)convertView.findViewById(R.id.iv_store);
+			LinearLayout ll_storeitem_cover = (LinearLayout) convertView.findViewById(R.id.ll_storeitem_cover);
+			
+			if(!msg.isOpen){
+				ll_storeitem_cover.setVisibility(View.VISIBLE);
+			}else{
+				ll_storeitem_cover.setVisibility(View.GONE);
+			}
 			
 			tv_storename.setText(msg.name);
 			tv_storedes.setText(msg.price+"元起送");

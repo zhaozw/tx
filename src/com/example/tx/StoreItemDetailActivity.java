@@ -40,6 +40,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
@@ -64,6 +65,15 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 	private ListViewInsideScrollView lv_storeitem_comment;  //评论列表
 	private LinearLayout ll_itemcomment_empty;              //无评论的替换view
 	private EditText et_storeitem_comment;                  //输入评论的框
+	
+	//收藏商品按钮
+	private TextView tv_like_detail;
+	private ImageView iv_like;
+	private boolean liked = false;
+	//举报商品
+	private TextView tv_reportItem;
+	//更多按钮
+	private ImageButton ib_more_detail;
 	
 	//点点数组  
     private ImageView[] tips;
@@ -102,6 +112,14 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 		Drawable d= getResources().getDrawable(R.drawable.default_image); //xxx根据自己的情况获取drawable
 		BitmapDrawable bd = (BitmapDrawable) d;
 		default_bitmap = bd.getBitmap();
+		
+		//举报商品
+		tv_reportItem = (TextView) findViewById(R.id.tv_reportItem);
+		//更多按钮
+		ib_more_detail = (ImageButton) findViewById(R.id.ib_more_storedetail);
+		
+		tv_like_detail = (TextView) findViewById(R.id.tv_like_detail);
+		iv_like = (ImageView) findViewById(R.id.iv_like);
 		
 		//设置监听
 		resizeLayout_storeitemdetail.setOnResizeListener(this);
@@ -154,6 +172,98 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 			
 		});
 		
+		//获取是否已经收藏该商品的按钮
+				new Thread(new Runnable(){
+
+					@Override
+					public void run() {
+						HashMap p = new HashMap();
+						if(!C.logged || C.userId.equals("")){
+							return;
+						}
+						p.put("itemId", theShopitem.itemId);
+						p.put("userId", C.userId);
+						JSONObject res = C.asyncPost(C.URLis_favorite_item, p);
+						try {
+							if (res.getInt("status")== 0) {
+								//TODO 没有收藏
+								//Log.d("like","like");
+								liked = false;
+							}
+							else if(res.getInt("status")== 1){
+								//TODO 已经收藏
+								//Log.d("like","liked");
+								liked = true;
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						mHandler.sendEmptyMessage(11);
+					}
+					
+				}).start();
+				
+				//点击喜欢商品按钮
+				tv_like_detail.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						new Thread(new Runnable(){
+
+							@Override
+							public void run() {
+								if(!C.logged||C.userId.equals("")){
+									mHandler.sendToast("您还未登陆！");
+									return;
+								}
+								if(!liked){
+									try {
+										HashMap p = new HashMap();
+										p.put("itemId", theShopitem.itemId);
+										p.put("userId", C.userId);
+										//Log.d("itemdetail",msg.itemId+"=="+C.userId);
+										JSONObject res = C.asyncPost(C.URLadd_item_to_favorite, p);
+										if (!(res.getInt("status")== 0)) {
+											//mHandler.sendToast(res.getString("description"));
+											return;
+										}else {
+											mHandler.sendToast("收藏成功");
+											liked = true;
+											mHandler.sendEmptyMessage(11);
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								else{
+									try {
+										HashMap p = new HashMap();
+										p.put("itemId", theShopitem.itemId);
+										p.put("userId", C.userId);
+										//Log.d("itemdetail",msg.itemId+"=="+C.userId);
+										JSONObject res = C.asyncPost(C.URLremove_item_from_favorite, p);
+										if (!(res.getInt("status")== 0)) {
+											//mHandler.sendToast(res.getString("description"));
+											return;
+										}else {
+											mHandler.sendToast(res.getString("description"));
+											liked = false;
+											mHandler.sendEmptyMessage(11);
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+													
+							}
+							
+						}).start();
+					}
+					
+				});
 		//提交评论
 		et_storeitem_comment.setOnKeyListener(new OnKeyListener(){
 
@@ -218,6 +328,98 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 			}
 			
 		});
+		
+		//更多按钮 点击事件
+				ib_more_detail.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View arg0) {
+						LinearLayout ll = (LinearLayout) findViewById(R.id.ll_more);
+						if(ll.getVisibility() == View.GONE){
+							ll.setVisibility(View.VISIBLE);
+						}
+						else if(ll.getVisibility() == View.VISIBLE){
+							ll.setVisibility(View.GONE);
+						}
+					}
+					
+				});
+				
+				//举报商品  一下四个按钮分别是举报 ，评论不和谐 ，内容不和谐， 取消
+				tv_reportItem.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View arg0) {
+						if(!C.logged){
+							makeToast("登录后才能举报");
+							return;
+						}
+						
+						LinearLayout ll_cover = (LinearLayout)findViewById(R.id.ll_cover);
+						LinearLayout ll_report = (LinearLayout)findViewById(R.id.ll_report);
+						
+						ll_cover.setVisibility(View.VISIBLE);
+						ll_report.setVisibility(View.VISIBLE);
+						
+					}
+					
+				});
+				
+				((Button) findViewById(R.id.btn_report_itemcomment)).setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						HashMap p = new HashMap();
+						p.put("userId", C.userId);
+						p.put("itemId", theShopitem.itemId);
+						p.put("content", "评论不和谐");
+						
+						reportThread thread = new reportThread(p);
+						thread.start();
+						
+						LinearLayout ll_cover = (LinearLayout)findViewById(R.id.ll_cover);
+						LinearLayout ll_report = (LinearLayout)findViewById(R.id.ll_report);
+						
+						ll_cover.setVisibility(View.GONE);
+						ll_report.setVisibility(View.GONE);
+					}
+					
+				});
+				
+				((Button) findViewById(R.id.btn_report_itemcontent)).setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						HashMap p = new HashMap();
+						p.put("userId", C.userId);
+						p.put("itemId", theShopitem.itemId);
+						p.put("content", "内容不和谐");
+						
+						reportThread thread = new reportThread(p);
+						thread.start();
+						
+						LinearLayout ll_cover = (LinearLayout)findViewById(R.id.ll_cover);
+						LinearLayout ll_report = (LinearLayout)findViewById(R.id.ll_report);
+						
+						ll_cover.setVisibility(View.GONE);
+						ll_report.setVisibility(View.GONE);
+					}
+					
+				});
+				
+				((Button) findViewById(R.id.b_report_cancle)).setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						LinearLayout ll_cover = (LinearLayout)findViewById(R.id.ll_cover);
+						LinearLayout ll_report = (LinearLayout)findViewById(R.id.ll_report);
+						
+						ll_cover.setVisibility(View.GONE);
+						ll_report.setVisibility(View.GONE);
+					}
+					
+				});
+		
 		
 		lv_storeitem_comment.setEmptyView(ll_itemcomment_empty);
 		lv_storeitem_comment.setOnItemClickListener(new OnItemClickListener() {
@@ -376,6 +578,16 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 				new SetDataListThread().start();
 				break;
 				//获取到theShopItem
+				//改变收藏按钮
+			case 11:
+				if(liked)
+					//变为蓝色心
+					iv_like.setImageResource(R.drawable.like_dislike_26);
+					
+				else
+					//变为原来的心
+					iv_like.setImageResource(R.drawable.like_26);
+				break;
 			case 33:
 				//设置一些值
 				tv_storeitem_name.setText(theShopitem.itemName);
@@ -402,6 +614,11 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 				cheakNoImage();
 				new setBitmapsThread(urls).start();
 				new SetDataListThread().start();
+				break;
+				
+			case 99:
+				String toast = (String) msg.obj;
+				makeToast(toast);
 				break;
 				
 			case BIGGER:
@@ -479,6 +696,31 @@ public class StoreItemDetailActivity extends BaseActivity implements OnResizeLis
 			mHandler.sendEmptyMessage(0);
 		}
 	}
+	
+	//举报的线程
+		private class reportThread extends Thread{
+			private HashMap p;
+			
+			public reportThread(HashMap p){
+				this.p = p;
+			}
+
+			@Override
+			public void run() {
+				JSONObject res = C.asyncPost(C.URLreport_Item, p);
+				//Log.d("report","yse");
+				try {
+					if(res.getInt("status") != 0){
+						mHandler.sendToast(res.getString("description"));
+					}
+					mHandler.sendToast(res.getString("description"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
 	
 	//设置bitmaps内容的线程
 		private class setBitmapsThread extends Thread{

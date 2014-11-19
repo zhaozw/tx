@@ -153,7 +153,7 @@
     <com.example.tx.view.MyExpandableListView
         android:id="@+id/elv_store_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:divider="@drawable/line_h2"
         android:dividerHeight="1px" >
@@ -165,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="该小店暂时没有商品。。。" />
+        android:text="商品马上就来，请稍等~" />
     
 		</LinearLayout>
     </ScrollView>

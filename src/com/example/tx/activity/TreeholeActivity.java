@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.afinal.simplecache.ACache;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,8 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -42,11 +39,6 @@ public class TreeholeActivity extends BaseActivity implements SwipeRefreshLayout
 	public static boolean needRefresh = false;
 	
 	public static TreeholeActivity that = null;
-	
-	//内容缓存
-	private ACache mCache;
-	private boolean firstIn = true;
-	private boolean readfromcache = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +46,6 @@ public class TreeholeActivity extends BaseActivity implements SwipeRefreshLayout
 		setContentView(R.layout.activity_treehole);
 		
 		that = this;
-		
-		SharedPreferences sp=getSharedPreferences("TaoxuePref", MODE_PRIVATE);
-		
-		mCache = ACache.get(this);
-		if(Welcome.firstInstall && sp.getBoolean("talkactivity", true)){
-			mCache.clear();
-			Editor editor=sp.edit();
-			editor.putBoolean("talkactivity", false);
-			editor.commit();
-		}
 		
 		lv_treehole = (ListView) findViewById(R.id.lv_treehole);
 		tv_treehole_empty = (TextView) findViewById(R.id.tv_treehole_empty);
@@ -167,21 +149,7 @@ public class TreeholeActivity extends BaseActivity implements SwipeRefreshLayout
 			try {
 				Log.d("talks","start");
 				HashMap p = new HashMap();
-				JSONObject res = null;
-				if(firstIn){
-					res = mCache.getAsJSONObject("talk");
-					firstIn = false;
-					readfromcache = true;
-				}
-				if(res == null){
-					res = C.asyncPost(C.URLget_talks, p);
-					readfromcache = false;
-				}
-				
-				//存入缓存
-				if(!readfromcache)
-					mCache.put("talk", res, ACache.TIME_HOUR);
-				
+				JSONObject res = C.asyncPost(C.URLget_talks, p);
 				if( !(res.getInt("status")==0)) {
 					mHandler.sendToast("网络有问题！");
 					SetRefreshingFalse();
@@ -202,7 +170,28 @@ public class TreeholeActivity extends BaseActivity implements SwipeRefreshLayout
 					Log.d("talks", talksender.getString("location"));
 					Log.d("talks", talksender.getString("avatar"));
 					
-
+//					List<TalkComment> comments = new ArrayList<TalkComment>();
+//					for(int j = 0 ; j < talkcomments.length();j++){
+//						JSONObject talkcomment = talkcomments.getJSONObject(j);
+//						JSONObject commentsender = talkcomment.getJSONObject("sender");
+						
+//						comments.add(new TalkComment(
+//								talkcomment.getString("id"),
+//								talkcomment.getString("time"),
+//								talkcomment.getString("content"),
+//								talkcomment.getString("refId"),
+//								talkcomment.getString("senderId"),
+//								talkcomment.getString("talkId"),
+//								new User(
+//										commentsender.getString("userId"),
+//										commentsender.getString("account"),
+//										commentsender.getString("userName"),
+//										commentsender.getString("college"),
+//										commentsender.getString("location"),
+//										commentsender.getString("acatar")
+//										)
+//								));
+//					}
 					msgs.add(new Talk(
 							item.getString("id"),
 							item.getString("time"),
