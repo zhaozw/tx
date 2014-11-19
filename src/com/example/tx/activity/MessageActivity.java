@@ -118,8 +118,8 @@ public class MessageActivity extends BaseActivity {
 		});
 		
 		mHandler = new MyHandler();
-		Log.d("thread","t");
-		//new SetDataListThread().start();
+		//Log.d("thread","t");
+		new SetDataListThread().start();
 		lv_message.setEmptyView(tv_message_empty);
 		//needRefresh = true;
 	}

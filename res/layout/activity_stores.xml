@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
@@ -30,23 +30,12 @@
             android:layout_marginTop="5sp"
             android:background="@color/white"
             android:src="@drawable/back" />
-        <!-- add by fjb -->
-        <ImageButton
-            android:id="@+id/ib_service_categroy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:background="@color/white"
-            android:src="@drawable/service_categroy" />
     </RelativeLayout>
 
     <!-- 我是顶部栏和下面内容的分割线 -->
 
     <LinearLayout
         android:id="@+id/LinearLayout2"
-        android:layout_below="@id/RelativeLayout2"
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@drawable/line_h2"
@@ -56,93 +45,10 @@
 
     <ListView
         android:id="@+id/lv_stores"
-        android:layout_below="@id/LinearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@drawable/line_h2"
         android:dividerHeight="1px" >
     </ListView>
-<!-- Modified by Feijunbo 2014.11.12 add type of service-->
-    <LinearLayout
-        android:id="@+id/ll_categroy_cover"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/LinearLayout2"
-        android:layout_toLeftOf="@+id/rl_shop_categroy"
-        android:alpha="0.5"
-        android:background="@color/black"
-        android:orientation="vertical"
-        android:visibility="gone"
-         >
-    </LinearLayout>
-	<LinearLayout 
-	    android:id="@+id/ll_shop_categroy"
-	    android:layout_width="wrap_content"
-	    android:layout_height="match_parent"
-	    android:background="#efefef"
-	    android:layout_below="@id/LinearLayout2"
-	    android:layout_alignParentRight="true"
-	    android:layout_marginTop="1px"
-	    android:orientation="vertical"
-		android:visibility="gone"
-	    >
-   			<LinearLayout 
-                android:id="@+id/ll_catering"
-                android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="20dp"
-	            android:paddingLeft="40dp"
-	            android:paddingRight="40dp"
-	           	android:paddingTop="9dp"
-	           	android:paddingBottom="9dp"
-	            android:background="@drawable/categroy_select"
-	            android:onClick="true"
-                >
-                <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="餐饮"
-	            android:textSize="23sp"
-	            />
-            </LinearLayout>
-	        <LinearLayout 
-                android:id="@+id/ll_shopping"
-                android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="1dp"
-	            android:paddingLeft="40dp"
-	            android:paddingRight="40dp"
-	           	android:paddingTop="9dp"
-	           	android:paddingBottom="9dp"
-	            android:background="@drawable/categroy_select"
-	            android:onClick="true"
-                >
-                <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="购物"
-	            android:textSize="23sp"
-	            />
-            </LinearLayout>
-            <LinearLayout 
-                android:id="@+id/ll_entertainment"
-                android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="1dp"
-	            android:paddingLeft="40dp"
-	            android:paddingRight="40dp"
-	           	android:paddingTop="9dp"
-	           	android:paddingBottom="9dp"
-	            android:background="@drawable/categroy_select"
-	            android:onClick="true"
-                >
-                <TextView 
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="娱乐"
-	            android:textSize="23sp"
-	            />
-            </LinearLayout>
-	       
-	</LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

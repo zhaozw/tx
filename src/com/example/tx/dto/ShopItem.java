@@ -8,8 +8,6 @@ public class ShopItem {
     public String clazz;           // 分类
     public String shopId;          // 所属商铺ID
     public int status;	           // 状态，0表示正常，1表示已删除
-    //added by fjb stock
-    public long stock;				//库存量
 
     /* 附加属性 */
     public Image[] images;

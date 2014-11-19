@@ -14,8 +14,6 @@ import com.example.tx.adapter.CategoryMarketAdapter;
 import com.example.tx.adapter.MarketListAdapter;
 import com.example.tx.dto.Category;
 import com.example.tx.dto.Categorys;
-import com.example.tx.dto.Image;
-import com.example.tx.dto.ShopItem;
 import com.example.tx.util.BaseActivity;
 import com.example.tx.util.C;
 import com.example.tx.util.Request4Image;
@@ -25,7 +23,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -49,7 +46,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
@@ -70,22 +66,11 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
     //点点数组  
     static private ImageView[] tips;
     private Bitmap[] bitmaps;
-    //分类商铺 add by fjb
-    private LinearLayout ll_storeinschool;
-    private LinearLayout ll_storeoutschool;
-    private LinearLayout ll_studentstore;
-    //not useable
-    private LinearLayout ll_txstore;
+    
     //gridview
-//    private MyGridView gv_category;
-//    private List<Category> msgs;
-    //点击跳转到详情页，对应的商品
-  	public ShopItem theShopitem;
-  	
-  	//热门商品首页显示信息
-  	private Bitmap[] hotBitmaps;
-  	private String Urls;
-  	
+    private MyGridView gv_category;
+    private List<Category> msgs;
+
 	private boolean needRefresh;
 	
 	private Bitmap[] topBitmaps;
@@ -102,18 +87,6 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 		is_markettop = (ImageSwitcher)findViewById(R.id.is_markettop);
 		ll_viewgroup = (LinearLayout)findViewById(R.id.ll_viewGroup);
 		
-		//add by fjb
-		ll_storeinschool = (LinearLayout)findViewById(R.id.ll_storeinschool);
-		ll_storeoutschool = (LinearLayout)findViewById(R.id.ll_storeoutschool);
-		ll_studentstore = (LinearLayout)findViewById(R.id.ll_studentstore);
-		//not useable
-		ll_txstore = (LinearLayout)findViewById(R.id.ll_txstore);
-		//set clicklistener 
-		categroyListener cListner = new categroyListener();
-		ll_storeinschool.setOnClickListener(cListner);
-		ll_storeoutschool.setOnClickListener(cListner);
-		ll_studentstore.setOnClickListener(cListner);
-		ll_txstore.setOnClickListener(cListner);
 //		RelativeLayout rl=(RelativeLayout)findViewById(R.id.rl_markettop);
 //		ll_viewgroup.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,ll_viewgroup.getLayoutParams().width*2/5));
 
@@ -121,7 +94,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 		BitmapDrawable bd = (BitmapDrawable) d;
 		default_bitmap = bd.getBitmap();
 		
-//		msgs = new ArrayList<Category>();
+		msgs = new ArrayList<Category>();
 		
 		//绑定imageswitch的事件及工厂
 		is_markettop.setFactory(this);
@@ -148,22 +121,22 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 			
 		});
 		
-//		gv_category = (MyGridView) findViewById(R.id.GV_category);
-//		
-//		gv_category.setOnItemClickListener(new OnItemClickListener(){
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int index,
-//					long id) {
-//				Intent intent = new Intent(MarketActivity.this,GoodslistActivity.class);
-//				Bundle bundle = new Bundle();
-//				bundle.putString("title", (String)msgs.get(index).name);
-//				bundle.putString("categoryid", (String)msgs.get(index).id);
-//				intent.putExtras(bundle);
-//				startActivity(intent);
-//			}
-//			
-//		});
+		gv_category = (MyGridView) findViewById(R.id.GV_category);
+		
+		gv_category.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int index,
+					long id) {
+				Intent intent = new Intent(MarketActivity.this,GoodslistActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("title", (String)msgs.get(index).name);
+				bundle.putString("categoryid", (String)msgs.get(index).id);
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+			
+		});
 		
 		
 		mHandler = new MyHandler();
@@ -172,34 +145,6 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 
 	}
 
-	
-	//ClickListener add by fjb 
-	private class categroyListener implements OnClickListener{
-
-		@Override
-		public void onClick(View v) {
-			Intent intent = new Intent();
-			Bundle b = new Bundle();
-			switch(v.getId()){
-			case R.id.ll_storeinschool:
-				b.putInt("type", 1);
-				break;
-			case R.id.ll_storeoutschool:
-				b.putInt("type", 2);
-				break;
-			case R.id.ll_studentstore:
-				b.putInt("type", 0);
-			//not useable 
-			case R.id.ll_txstore:
-				b.putInt("type", 0);
-				break;
-			}
-			intent.putExtra("store", b);
-			intent.setClass(MarketActivity.this,StoresActivity.class);
-			startActivity(intent);
-		}
-		
-	}
 	private void setViewgroupBackground(int selectItems) {
 		for(int i=0; i<tips.length; i++){    
             if(i == selectItems){    
@@ -289,7 +234,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 			switch (msg.what) {
 			case 0:
 				//Log.d("getcategory", "hander");
-//				gv_category.setAdapter(new CategoryMarketAdapter(MarketActivity.this, msgs ,gv_category));
+				gv_category.setAdapter(new CategoryMarketAdapter(MarketActivity.this, msgs ,gv_category));
 				break;
 				
 			case 1:
@@ -317,30 +262,7 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 				new setBitmapsThread(urls).start();
 				
 				break;
-				//设置热门商品
-			case 45:
-				ArrayList<ShopItem> siList=new ArrayList<ShopItem>();
-				siList = (ArrayList<ShopItem>) msg.obj;
-				//第一个热门商品
-				TextView tv_hotItems_1 = (TextView) findViewById(R.id.tv_hotItems_1);
-				TextView tv_hotItems_1_1 = (TextView) findViewById(R.id.tv_hotItems_1_1);
-				tv_hotItems_1.setText(siList.get(0).itemName);
-				tv_hotItems_1_1.setText("￥" + siList.get(0).price + "元");
-				tv_hotItems_1_1.setTextColor(Color.RED);
-				//第二个热门商品
-				TextView tv_hotItems_2 = (TextView) findViewById(R.id.tv_hotItems_2);
-				TextView tv_hotItems_2_1 = (TextView) findViewById(R.id.tv_hotItems_2_1);
-				tv_hotItems_2.setText(siList.get(1).itemName);
-				tv_hotItems_2_1.setText("￥" + siList.get(1).price + "元");
-				tv_hotItems_2_1.setTextColor(Color.RED);
-				//第三个热门商品
-//				TextView tv_hotItems_3 = (TextView) findViewById(R.id.tv_hotItems_1);
-//				TextView tv_hotItems_3_1 = (TextView) findViewById(R.id.tv_hotItems_1_1);
-//				tv_hotItems_3.setText(siList.get(2).itemName);
-//				tv_hotItems_3_1.setText(siList.get(2).price + "");
-				Image [] images = null;
-				images[0] = siList.get(0).images[0];
-				break;
+				
 				
 			case 99:
 				String toast = (String) msg.obj;
@@ -391,13 +313,12 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 				//获取主页的三个图片
 				//Log.d("gethomepageimages", "startgetimages");
 				HashMap hm = new HashMap();
-				JSONObject ret = C.asyncPost(C.URLget_homepage_info, hm);
+				JSONObject ret = C.asyncPost(C.URLget_homepage_images, hm);
 				if(!(ret.getInt("status") == 0) ){
 					mHandler.sendToast("网络有问题！");
 					return ;
 				}
-				JSONObject result = ret.getJSONObject("result");
-				JSONArray images = result.getJSONArray("homePageImages");
+				JSONArray images = ret.getJSONArray("homePageImages");
 				bitcount = images.length();
 				urls = new String[bitcount];
 				bitmaps = new Bitmap[bitcount];
@@ -414,71 +335,45 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 				
 				
 				mHandler.sendEmptyMessage(44);
-				//获取热门商品信息
-				JSONArray hotitems = result.getJSONArray("hotItems");
-				ArrayList<ShopItem> siList=new ArrayList<ShopItem>();
-				for(int j=0;j<hotitems.length();j++)
-				{
-					JSONObject o=hotitems.getJSONObject(j);
-					JSONArray imagesArray=o.getJSONArray("images");
-					Image[] hotitem_images=new Image[imagesArray.length()];
-					for(int k=0;k<imagesArray.length();k++)
-					{
-						JSONObject oo=imagesArray.getJSONObject(k);
-						hotitem_images[k]=new Image(oo.getString("picId"),oo.getString("picUrl"));
-					}
-					ShopItem si=new ShopItem(o.getString("itemId"),o.getString("itemName"),(float)o.getDouble("price"),o.getString("details"),
-							o.getString("clazz"),o.getString("shopId"),o.getInt("status"),hotitem_images,null);
-					if(o.has("stock")){
-						si.stock = o.getLong("stock");
-					}
-					else{
-						//表示没有库存限制
-						si.stock = -1;
-					}
-					siList.add(si);
-				}
-				Message siListMessage = mHandler.obtainMessage();
-				siListMessage.obj = siList;
-				siListMessage.what = 45;
-				mHandler.sendMessage(siListMessage);
+				
+				
 				//获取分类信息
 				//Log.d("getcategory","startget");
-//				HashMap p = new HashMap();
-//				JSONObject res = C.asyncPost(C.URLget_categories, p);
-//				if( !(res.getInt("status") == 0) ) {
-//					mHandler.sendToast("网络有问题！");
-//					return ;
-//				}
-//				
-//				JSONArray categories = res.getJSONArray("categories");
-//				
-//				if(Categorys.categorys != null)
-//					Categorys.categorys.clear();
-//				for(int i=0;i<categories.length();i++) {
-//					JSONObject category = categories.getJSONObject(i);
-//					
-//					msgs.add(new Category(
-//							null,
-//							category.getString("id"),
-//							category.getString("name"),
-//							category.getString("image")
-//							));
-//					
-//					//Log.d("getcategory",category.getString("name")+category.getString("image"));
-//					
-//					//把种类信息保存起来
-//					
-//					Categorys.categorys.add(new Category(
-//							null,
-//							category.getString("id"),
-//							category.getString("name"),
-//							category.getString("image")
-//							));
-//					
-//					
-//				}	
-//				mHandler.sendEmptyMessage(0);
+				HashMap p = new HashMap();
+				JSONObject res = C.asyncPost(C.URLget_categories, p);
+				if( !(res.getInt("status") == 0) ) {
+					mHandler.sendToast("网络有问题！");
+					return ;
+				}
+				
+				JSONArray categories = res.getJSONArray("categories");
+				
+				if(Categorys.categorys != null)
+					Categorys.categorys.clear();
+				for(int i=0;i<categories.length();i++) {
+					JSONObject category = categories.getJSONObject(i);
+					
+					msgs.add(new Category(
+							null,
+							category.getString("id"),
+							category.getString("name"),
+							category.getString("image")
+							));
+					
+					//Log.d("getcategory",category.getString("name")+category.getString("image"));
+					
+					//把种类信息保存起来
+					
+					Categorys.categorys.add(new Category(
+							null,
+							category.getString("id"),
+							category.getString("name"),
+							category.getString("image")
+							));
+					
+					
+				}	
+				mHandler.sendEmptyMessage(0);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -486,49 +381,6 @@ public class MarketActivity extends BaseActivity implements ViewFactory, OnTouch
 			//Log.d("getcategory","send");
 			//mHandler.sendEmptyMessage(0);
 		}
-		
-	}
-	
-	//设置热门商品照片
-	
-	private class setHotItemPic extends Thread{
-		Image[] images;
-		
-		public setHotItemPic(Image[] images) {
-			super();
-			this.images = images;
-		}
-
-		@Override
-		public void run() {
-			for(int j = 0;j < images.length; j++){
-				Bitmap bm=C.getBitmapFromMemCache(images[j].picId);
-				if(bm!=null)
-				{
-					hotBitmaps[j] = bm;
-				}
-				else
-				{
-					final String picId = images[j].picId;
-					new Request4Image(picId)
-					{
-						
-						@Override
-						protected void onPostExecute(Bitmap result) {
-							if(result!=null)
-							{
-								C.addBitmapToMemoryCache(picId, result);
-							}
-						}
-					}.execute();
-					hotBitmaps[j] = C.getBitmapFromMemCache(picId);
-				}
-			}
-			
-		}
-		
-		
-		
 		
 	}
 	

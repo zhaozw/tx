@@ -1,7 +1,5 @@
 package com.example.tx.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -22,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
@@ -33,8 +32,12 @@ import org.dom4j.Element;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.example.tx.dto.UserDetails;
+
 import android.annotation.SuppressLint;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -55,13 +58,11 @@ public class C
 	
 	//服务器IP
 //	static public final String IP = "http://bittaoxue.sinaapp.com";
-	
-	//测试服务器地址
-	static public final String IP="http://test.taoxueapp.com";
+
 //	static public final String IP="http://112.126.67.182:8080";
 //	static public final String IP="http://125.116.16.122:8888";
 //	static public final String IP="http://10.12.38.114:8080";
-//	static public final String IP="http://112.126.67.182:8080";
+	static public final String IP="http://112.126.67.182:8080";
 //	static public final String IP="http://114.215.150.9:8080";
 //	static public final String IP="http://114.215.150.9:8080/";//
 //
@@ -186,8 +187,6 @@ public class C
 		static public final String URLreport_talk = IP + "/Talk/ReportTalk";
 		
 	//校内商店
-		//added by fjb 获取首页信息
-		static public final String URLget_homepage_info = IP + "/GetHomePageInfo";
 		//获取所有商铺
 		static public final String URLget_shops=IP+"/Shop/GetShops";
 		//获取商铺中的商品

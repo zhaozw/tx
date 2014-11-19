@@ -15,7 +15,7 @@
         android:paddingBottom="@dimen/head_padding_bottom"
         android:paddingTop="@dimen/head_padding_top" >
 
-        <TextView
+        <TextView 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

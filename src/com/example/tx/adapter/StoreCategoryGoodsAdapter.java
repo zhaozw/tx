@@ -84,8 +84,6 @@ public class StoreCategoryGoodsAdapter extends BaseExpandableListAdapter {
 		public TextView tv;
 		public TextView tv_storegoodsdes;
 		public TextView tv_storegoodsname;
-		//库存量控件
-		public TextView tv_storegoodsstock;
 		public ImageView iv_logo;
 		public ImageButton ib_plus;
 		public ImageButton ib_minus;
@@ -111,7 +109,6 @@ public class StoreCategoryGoodsAdapter extends BaseExpandableListAdapter {
 			holder.ll_storeitem = (LinearLayout) convertView.findViewById(R.id.ll_storeitem);//用于跳转到详情页
 			holder.tv_storegoodsname = (TextView) convertView.findViewById(R.id.tv_storegoodsname);//商品名称
 			holder.tv_storegoodsdes = (TextView) convertView.findViewById(R.id.tv_storegoodsdes);//商品
-			holder.tv_storegoodsstock = (TextView) convertView.findViewById(R.id.tv_storegoodsstock);//库存量
 			holder.ib_plus = (ImageButton) convertView.findViewById(R.id.ib_plus);//加
 			holder.ib_minus = (ImageButton) convertView.findViewById(R.id.ib_minus);//减
 			holder.et_num = (TextView) convertView.findViewById(R.id.et_num);//数量
@@ -169,9 +166,6 @@ public class StoreCategoryGoodsAdapter extends BaseExpandableListAdapter {
 		
 		holder.tv_storegoodsname.setText(si.itemName);
 		holder.tv_storegoodsdes.setText("￥"+si.price+"元");
-		if(si.stock != -1){
-			holder.tv_storegoodsstock.setText(si.stock + "");
-		}
 		int n_num = Integer.parseInt(StoreDetailActivity.that.so.getNum(si.itemId));
 		holder.et_num.setText(StoreDetailActivity.that.so.getNum(si.itemId));//yu
 		if(n_num > 0){

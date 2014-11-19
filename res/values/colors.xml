@@ -7,9 +7,6 @@
     <color name="list_item_bg">#fff</color>
     <color name="list_item_bg_press">#f8b500</color>
     <color name="list_item_bg_border">#d4d4d4</color>
-    <!-- modified by fjb add  -->
-    <drawable name="categroy_selected">#efefef</drawable>
-    <drawable name="categroy_unselected">#FFFFFF</drawable>
   <!--   <color name="home_bottom_bg">#c8c8c8</color> -->
     
 	<color name="white">#FFFFFF</color><!--白色 -->  
